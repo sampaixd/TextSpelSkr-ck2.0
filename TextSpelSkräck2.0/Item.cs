@@ -8,11 +8,11 @@ namespace TextSpelSkräck2._0
 {
     internal class Item
     {
-        string name;
-        string description;
-        int id;
-        bool pickedUp;
-        bool used;
+        protected string name;
+        protected string description;
+        protected int id;
+        protected bool pickedUp;
+        protected bool used;
 
         public Item(string name, string description)
         {

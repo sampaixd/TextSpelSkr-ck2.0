@@ -16,9 +16,13 @@ namespace TextSpelSkräck2._0
             this.id = id;
         }
 
-        public abstract void InsideRoom();
+        public abstract int InsideRoom();
+
+        protected abstract void FirstEntry();
 
         protected abstract void LookAround();
+
+
 
         public int Id { get { return id; } }
     }

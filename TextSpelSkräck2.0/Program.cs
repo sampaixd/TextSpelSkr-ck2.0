@@ -14,11 +14,15 @@ namespace TextSpelSkräck2._0
 
             rooms.Add(new Mainhall());
             int currentRoom = 0;
-            foreach (Room room in rooms)
+            while (currentRoom != -1)
             {
-                if (room.Id == currentRoom)
+                foreach (Room room in rooms)
                 {
-                    room.InsideRoom();
+                    if (room.Id == currentRoom)
+                    {
+                        currentRoom = room.InsideRoom();
+                        break;
+                    }
                 }
             }
         }
