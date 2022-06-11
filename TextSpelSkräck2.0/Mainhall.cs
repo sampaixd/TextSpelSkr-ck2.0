@@ -17,47 +17,135 @@ namespace TextSpelSkräck2._0
         {
             if (!Map.DiscoveredMainHall)
                 FirstEntry();
+            while(true)
+            { 
+                string userInput = Console.ReadLine();
+                userInput = userInput.ToLower();
+                Console.Clear();
+                switch (userInput)
+                {
+                    // going to bedroom
+                    case "go to bedroom":
+                    case "go to left room":
+                    case "go to left":
+                    case "go to left door":
+                        return 2;
 
-            string userInput = Console.ReadLine();
-            userInput = userInput.ToLower();
-            switch(userInput)
+
+                    // going to kitchen
+                    case "go to kitchen":
+                    case "go to front door":
+                    case "go to front room":
+                    case "go to center room":
+                    case "go forward":
+                    case "go to center":
+                    case "go to front":
+                        return 3;
+
+                    // going to toolshed
+                    case "go to toolshed":
+                    case "go to right door":
+                    case "go to right room":
+                    case "go to right":
+                        return 4;
+
+
+                    case "inspect pool of blood":
+                    case "inspect blood":
+                    case "inspect pool":
+                        InspectBlood();
+                        break;
+
+                    case "use uvflashlight":
+                    case "use uv flashlight":
+                    case "use flashlight":
+                    case "use uv":
+                        UseUVFlashlight();
+                        break;
+
+                    case "look around":
+                        LookAround();
+                        break;
+
+                    case "help":
+                        Help.HelpMenu();
+                        break;
+
+                    case "inventory":
+                        Inventory.ViewInventory();
+                        break;
+
+                    default:
+                        Console.WriteLine("invalid input, please type \"help\" to get a list of avalible options");
+                        break;
+                }
+            }
+        }
+
+        void InspectBlood()
+        {
+            if (!DocumentManager.IsUnlocked(1))
             {
-                // going to bedroom
-                case "go to bedroom":
-                case "go to left room":
-                case "go to left":
-                case "go to left door":
-                    return 2;
+                Console.WriteLine("You walk towards the pool of blood in the middle of the room, trying to figure out where the \n" +
+                    "blood is coming from. As you get closer, you see a document lying half buried in the pool of \n" +
+                    "blood. You pick it up and try to read it, however the blood makes it almost impossible to \n" +
+                    "read, only letting you read a few letters.");
+                Console.WriteLine("\n" + DocumentManager.Content(1));
+                Console.WriteLine("\nBlood stained document added to documents");
+                Console.WriteLine("\nPress any button to continue");
+                DocumentManager.UnlockDocument(1);
+                Console.ReadKey();
+                Console.Clear();
+            }
 
+            else
+                Console.WriteLine("You have already picked up the document");
+        }
 
-                // going to kitchen
-                case "go to kitchen":
-                case "go to front door":
-                case "go to front room":
-                case "go to center room":
-                case "go forward":
-                case "go to center":
-                case "go to front":
-                    return 3;
+        void UseUVFlashlight()
+        {
+            if (Inventory.IsPickedUp(1) && !DocumentManager.IsUnlocked(8))
+            {
+                Console.WriteLine("You bring up your UV flashlight, slightly terrified yet determined to figure out what, or who is \n" +
+                    "hanging in the chandelier. As you turn on the flashlight, you start shining from the bottom to \n" +
+                    "the top. At first only a pair of shoes are revealed, dangling above the floor with a narrow line \n" +
+                    "of blood sipping from their toes to the floor. The shoes appear to be similar to the ones of the \n" +
+                    "person in the walls, which makes you think that this person worked together with them. As \n" +
+                    "you bring the UV light even higher, your suspicions are confirmed, with black military pants. \n" +
+                    "The source of the blood is yet to be seen. Going even higher, the torso reveals a black vest \n" +
+                    "with many pockets. Inside the pockets you notice a key as well as a document. You grab \n" +
+                    "both and start reading the document, which appears to have been printed rather than written \n" +
+                    "by hand.");
+                Console.WriteLine("\n" + DocumentManager.Content(8));
+                Console.WriteLine("\nPress any button to continue");
+                Console.ReadKey();
+                Console.Clear();
+                Console.WriteLine("After reading the note, you slowly take the UV flashlight even higher up, to reveal the face. \n" +
+                    "The visor on the helmet has been shattered, revealing one of the side arms of the chandelier \n" +
+                    "sticking out from the mouth, like a serpent with blood slowly seeping from out of their mouth. \n" +
+                    "Looking even further up, you see two blue eyes, with the eyeballs turned red, due to blood \n" +
+                    "filling the eyes. Weird, it feels like you have seen those eyes before, although it is impossible \n" +
+                    "to tell due to the blood giving them a brand new color At the top, you notice the hair. It is \n" +
+                    "cluttered with blood, however you instantly notice the golden luxurious hair that used to be. \n" +
+                    "Is it… Ellen? Looking closer, you instantly realise that it is the same blue eyes. It is Ellen, \n" +
+                    "hanging lifeless in the chandelier, slowly swinging back and forth. Ellen I am so sorry, I did \n" +
+                    "not make it in time.");
+                Console.WriteLine("\nEscape route added to documents");
+                Console.WriteLine("\nAttic key added to inventory");
+                Console.WriteLine("\nPress any key to continue");
 
-                // going to toolshed
-                case "go to toolshed":
-                case "go to right door":
-                case "go to right room":
-                case "go to right":
-                    return 4;
-
-                case "look around":
-                    LookAround();
-                    break;
-
-                case "help":
-                    Help.HelpMenu();
-                    break;
-
-                case "inventory":
-                    Inventory.DisplayInventory();
-                    break;
+                DocumentManager.UnlockDocument(8);
+                Inventory.UnlockItem(2);
+                Console.ReadKey();
+                Console.Clear();
+            }
+            else if (Inventory.IsPickedUp(1))
+            {
+                Console.WriteLine("you have already used the UV flashlight");
+            }
+            else
+            {
+                Console.WriteLine("you do not have a UV flashlight");
             }
         }
 
@@ -108,7 +196,7 @@ namespace TextSpelSkräck2._0
                         Console.WriteLine("TIP: You have to turn on the lights");
                         break;
                     case "inventory":
-                        Inventory.DisplayInventory();
+                        Inventory.ViewInventory();
                         break;
                     case "document":
                     case "documents":

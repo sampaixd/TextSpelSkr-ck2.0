@@ -11,22 +11,22 @@ namespace TextSpelSkräck2._0
         protected string name;
         protected string description;
         protected int id;
-        protected bool pickedUp;
-        protected bool used;
+        protected bool isPickedUp;
+        protected bool isConsumed;
 
         public Item(string name, string description)
         {
             this.name = name;
             this.description = description;
             this.id = -1;
-            this.pickedUp = false;
-            this.used = false;
+            this.isPickedUp = false;
+            this.isConsumed = false;
         }
 
         public string Name { get { return name; } }
         public string Description { get { return description; } set { description = value; } }
         public int Id { get { return id; } set { id = value; } }
-        public bool PickedUp { get { return pickedUp; } set { pickedUp = value; } }
-        public bool Used { get { return used; } set { used = value; } }
+        public bool IsPickedUp { get { return isPickedUp; } set { isPickedUp = value; } }
+        public bool IsConsumed { get { return isConsumed; } set { isConsumed = value; } }
     }
 }

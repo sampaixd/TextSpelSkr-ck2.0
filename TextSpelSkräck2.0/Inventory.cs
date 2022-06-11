@@ -14,6 +14,7 @@ namespace TextSpelSkräck2._0
          * UV flashlight
          * Attic key
          * Handgun
+         * Mysterious key
          */
         static List<Item> items = new List<Item>();
 
@@ -27,15 +28,17 @@ namespace TextSpelSkräck2._0
                             "this house."));
             items.Add(new Item("Handgun", "The gun appears to be loaded, it could be of use incase that thing mentioned \n" +
                             "in some of the notes would appear"));
+            items.Add(new Item("Mysterious key", "The key is somewhat rusty, however it also appears to be in better shape \n" +
+                "than the other keys found here. You have no idea what purpose it has."));
         }
 
-        public static void DisplayInventory()
+        public static void ViewInventory()
         {
             int currentlyUnlockedAmmount = 0;
             int currentlySelectedItem = 0;
             foreach (Item item in items)
             {
-                if (item.PickedUp && !item.Used)
+                if (item.IsPickedUp && !item.IsConsumed)
                 {
                     item.Id = currentlyUnlockedAmmount++;
                 }
@@ -109,7 +112,23 @@ namespace TextSpelSkräck2._0
 
         static public void UnlockItem(int selectedItem)
         {
-            items[selectedItem].PickedUp = true;
+            items[selectedItem].IsPickedUp = true;
+        }
+
+        static public bool IsPickedUp(int selectedItem)
+        {
+            return items[selectedItem].IsPickedUp;
+        }
+
+        static public bool IsConsumed(int selectedItem)
+        {
+            return (items[selectedItem].IsConsumed);
+        }
+        
+        // only used for items with 1 time use, for example keys
+        static public void ConsumeItem(int selectedItem)
+        {
+            items[selectedItem].IsConsumed = true;
         }
     }
 }

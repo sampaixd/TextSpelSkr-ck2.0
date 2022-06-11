@@ -13,5 +13,7 @@ namespace TextSpelSkräck2._0
         {
             this.content = content;
         }
+
+        public string Content { get { return content; } }
     }
 }

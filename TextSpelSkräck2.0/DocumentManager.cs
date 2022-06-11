@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TextSpelSkräck2._0
 {
@@ -10,25 +7,40 @@ namespace TextSpelSkräck2._0
     {
         static List<Document> documents = new List<Document>();
 
+        /*
+         * documents (in order)
+         * Letter from Ellen
+         * Blood stained document (Main hall)
+         * Blood stained note (Toolshed)
+         * Recipe for homemade bread (Kitchen)
+         * Mysterious note (Cell)
+         * Notes about 'it' (Storage)
+         * Information regarding UV light (Walls)
+         * Number habits with G001(Toolshed)
+         * Escape route (Main hall)
+         * List of members operation Gestalt (Toolshed)
+         * Unsent letter from Ellen (Attic)
+         * Mission Briefing operation Gestalt (Attic)
+         */
         static DocumentManager()
         {
-            documents.Add(new Document("Letter from Ellen", "A letter sent from Ellen, after 2 years of silence", 
+            documents.Add(new Document("Letter from Ellen", "A letter sent from Ellen, after 2 years of silence",
                 "Dear James \n\nDulvey, Lousiana \n\nCampell estate \n\nCome pick me upp \nLove, Ellen"));
-            
+
             documents.Add(new Document("Blood stained document (Main hall)", "A document found in the main hall. \n" +
                 "The blood has almost entirely destroyed the document, making it nigh impossible to read its content",
                 "M------ -- -p------- ---t--- " +
                 "\n-eb------ ----- ---l- --------t " +
                 "\n---- ---e- ----i--- --- ---------n" +
                 "\n---e- ------o- --c----- --d -r--------"));
-            
+
             documents.Add(new Document("Blood stained note (Toolshed)", "The note is partly covered in blood, however some parts are still readable",
                 "How did --------" +
                 "\nlocked in the basem----- bedroom" +
                 "\nmust be s---------" +
                 "\n------- fl-----------" +
                 "\n---------------------"));
-            
+
             documents.Add(new Document("Recipe for homemade bread (Kitchen)", "It is a recipe for making homemade bread. \n" +
                 "Ellen used to make the most delicious homemade bread back then",
                 "Recipe for making delicious homemade bread:" +
@@ -128,10 +140,106 @@ namespace TextSpelSkräck2._0
         }
 
 
-
-        static public void UnlockDocument(int selectedItem)
+        public static void ViewDocuments()
         {
-            documents[selectedItem].PickedUp = true;
+            int currentlyUnlockedAmmount = 0;
+            int currentlySelectedDocument = 0;
+            foreach (Document document in documents)
+            {
+                if (document.IsPickedUp && !document.IsConsumed)
+                {
+                    document.Id = currentlyUnlockedAmmount++;
+                }
+            }
+
+            while (currentlySelectedDocument != -1)
+            {
+
+                foreach (Document document in documents)
+                {
+                    DisplayUnlockedItem(document, currentlySelectedDocument);
+                }
+                Console.WriteLine("\n" + documents[currentlySelectedDocument].Description);
+                currentlySelectedDocument = NavigateDocuments(currentlyUnlockedAmmount, currentlySelectedDocument);
+                Console.Clear();
+            }
         }
+
+        static void DisplayUnlockedItem(Document currentDocument, int currentlySelectedDocument)
+        {
+            if (currentDocument.Id != -1)
+                DisplayDocument(currentlySelectedDocument, currentDocument.Id, currentDocument.Name);
+        }
+
+        static void DisplayDocument(int currentlySelectedDocument, int currentDocumentId, string currentDocumentName)
+        {
+            if (currentlySelectedDocument == currentDocumentId)
+            {
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.BackgroundColor = ConsoleColor.White;
+            }
+            Console.WriteLine(currentDocumentName);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.BackgroundColor = ConsoleColor.Black;
+
+        }
+
+        static int NavigateDocuments(int currentlyUnlockedAmmount, int currentlySelectedDocument)
+        {
+            Console.ForegroundColor = ConsoleColor.Black;
+            ConsoleKeyInfo pressedButton = Console.ReadKey();
+            Console.ForegroundColor = ConsoleColor.White;
+
+            switch (pressedButton.Key)
+            {
+                case ConsoleKey.W:
+                case ConsoleKey.UpArrow:
+                    if (currentlySelectedDocument <= 0)
+                        return currentlyUnlockedAmmount - 1;
+                    return --currentlySelectedDocument;
+
+
+                case ConsoleKey.S:
+                case ConsoleKey.DownArrow:
+                    if (currentlySelectedDocument >= currentlyUnlockedAmmount - 1)
+                        return 0;
+                    return ++currentlySelectedDocument;
+
+                case ConsoleKey.Enter:
+                    ViewContent(currentlySelectedDocument);
+                    return currentlySelectedDocument;
+
+                case ConsoleKey.Escape:
+                    return -1;
+
+                default:
+                    return currentlySelectedDocument;
+            }
+        }
+
+        static void ViewContent(int selectedDocument)
+        {
+            Console.Clear();
+            Console.WriteLine(documents[selectedDocument].Content);
+            Console.WriteLine("\nPress any key to return to previous menu");
+            Console.ReadKey();
+        }
+
+        public static bool IsUnlocked(int selectedDocument)
+        {
+            return documents[selectedDocument].IsPickedUp;
+        }
+
+        public static string Content(int selectedDocument)
+        {
+            return documents[selectedDocument].Content;
+        }
+
+        public static void UnlockDocument(int selectedDocument)
+        {
+            documents[selectedDocument].IsPickedUp = true;
+        }
+
+       
     }
 }
