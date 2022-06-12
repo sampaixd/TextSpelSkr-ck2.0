@@ -9,18 +9,18 @@ namespace TextSpelSkräck2._0
 
         /*
          * documents (in order)
-         * Letter from Ellen
-         * Blood stained document (Main hall)
-         * Blood stained note (Toolshed)
-         * Recipe for homemade bread (Kitchen)
-         * Mysterious note (Cell)
-         * Notes about 'it' (Storage)
-         * Information regarding UV light (Walls)
-         * Number habits with G001(Toolshed)
-         * Escape route (Main hall)
-         * List of members operation Gestalt (Toolshed)
-         * Unsent letter from Ellen (Attic)
-         * Mission Briefing operation Gestalt (Attic)
+         * Letter from Ellen                                0
+         * Blood stained document (Main hall)               1
+         * Blood stained note (Toolshed)                    2
+         * Recipe for homemade bread (Kitchen)              3
+         * Mysterious note (Cell)                           4
+         * Notes about 'it' (Storage)                       5
+         * Information regarding UV light (Walls)           6
+         * Number habits with G001(Toolshed)                7
+         * Escape route (Main hall)                         8
+         * List of members operation Gestalt (Toolshed)     9
+         * Unsent letter from Ellen (Attic)                 10
+         * Mission Briefing operation Gestalt (Attic)       11
          */
         static DocumentManager()
         {
@@ -225,7 +225,7 @@ namespace TextSpelSkräck2._0
             Console.ReadKey();
         }
 
-        public static bool IsUnlocked(int selectedDocument)
+        public static bool IsPickedUp(int selectedDocument)
         {
             return documents[selectedDocument].IsPickedUp;
         }

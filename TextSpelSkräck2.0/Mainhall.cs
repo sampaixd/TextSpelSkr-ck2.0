@@ -8,7 +8,6 @@ namespace TextSpelSkräck2._0
 {
     internal class Mainhall : Room
     {
-        bool activatedLightSwitch = false;
         bool foundEllenChandelier = false;
         public Mainhall() : base("Main hall", 1)
         { }
@@ -75,6 +74,12 @@ namespace TextSpelSkräck2._0
                         Inventory.ViewInventory();
                         break;
 
+                    case "document":
+                    case "documents":
+                    case "view documents":
+                        DocumentManager.ViewDocuments();
+                        break;
+
                     default:
                         Console.WriteLine("invalid input, please type \"help\" to get a list of avalible options");
                         break;
@@ -84,7 +89,7 @@ namespace TextSpelSkräck2._0
 
         void InspectBlood()
         {
-            if (!DocumentManager.IsUnlocked(1))
+            if (!DocumentManager.IsPickedUp(1))
             {
                 Console.WriteLine("You walk towards the pool of blood in the middle of the room, trying to figure out where the \n" +
                     "blood is coming from. As you get closer, you see a document lying half buried in the pool of \n" +
@@ -104,7 +109,7 @@ namespace TextSpelSkräck2._0
 
         void UseUVFlashlight()
         {
-            if (Inventory.IsPickedUp(1) && !DocumentManager.IsUnlocked(8))
+            if (Inventory.IsPickedUp(1) && !DocumentManager.IsPickedUp(8))
             {
                 Console.WriteLine("You bring up your UV flashlight, slightly terrified yet determined to figure out what, or who is \n" +
                     "hanging in the chandelier. As you turn on the flashlight, you start shining from the bottom to \n" +

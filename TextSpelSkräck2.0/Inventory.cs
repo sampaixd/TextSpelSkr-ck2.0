@@ -10,11 +10,11 @@ namespace TextSpelSkräck2._0
     {
         /* 
          * Items list (in order):
-         * Basement key
-         * UV flashlight
-         * Attic key
-         * Handgun
-         * Mysterious key
+         * Basement key     0
+         * UV flashlight    1
+         * Attic key        2
+         * Handgun          3
+         * Mysterious key   4
          */
         static List<Item> items = new List<Item>();
 
