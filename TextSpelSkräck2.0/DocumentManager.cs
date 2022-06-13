@@ -137,6 +137,8 @@ namespace TextSpelSkräck2._0
                 "will be of any effect. Therefore, you will also be given a UV flashlight, as the preparation \n" +
                 "team managed to reveal the corpse of the former owner using a UV flashlight. It is only a \n" +
                 "theory at the moment, but the UV light could prove to be an effective weapon."));
+
+            documents[0].IsPickedUp = true; // you start with this unlocked
         }
 
 

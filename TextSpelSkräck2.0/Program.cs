@@ -11,6 +11,7 @@ namespace TextSpelSkräck2._0
         static void Main(string[] args)
         {
             List<Room> rooms = GenerateRooms();
+            TestMethod();
             Prologue();
             int currentRoom = 0;
             while (currentRoom != -1)
@@ -28,13 +29,10 @@ namespace TextSpelSkräck2._0
 
         static void TestMethod()
         {
-            DocumentManager.UnlockDocument(1);
-            DocumentManager.UnlockDocument(3);
-            DocumentManager.UnlockDocument(5);
-            DocumentManager.UnlockDocument(2);
-            DocumentManager.UnlockDocument(11);
-
-            DocumentManager.ViewDocuments();
+            Mainhall mainhall = new Mainhall();
+            DocumentManager.UnlockDocument(0);
+            Inventory.UnlockItem(0);
+            mainhall.InsideRoom();
 
         }
 

@@ -78,26 +78,8 @@ namespace TextSpelSkräck2._0
                         UseUVFlashlight();
                         break;
 
-                    case "look around":
-                        LookAround();
-                        break;
-
-                    case "inventory":
-                        Inventory.ViewInventory();
-                        break;
-
-                    case "document":
-                    case "documents":
-                    case "view documents":
-                        DocumentManager.ViewDocuments();
-                        break;
-
-                    case "help":
-                        Help.HelpMenu();
-                        break;
-
                     default:
-                        Console.WriteLine("invalid input, please type \"help\" to get a list of avalible options");
+                        InsideRoomBaseSwitch(userInput);
                         break;
                 }
             }
