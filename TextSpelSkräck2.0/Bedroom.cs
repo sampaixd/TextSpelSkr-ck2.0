@@ -32,6 +32,7 @@ namespace TextSpelSkräck2._0
                     case "go to basement":
                     case "go to basement stairs":
                     case "go downstairs":
+                    case "go to downstairs":
                     case "go to right door":
                         if (!EventTriggers.BasementDoorIsLocked)
                             return 5;

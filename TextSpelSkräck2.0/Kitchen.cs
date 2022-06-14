@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace TextSpelSkräck2._0
 {
@@ -20,7 +21,30 @@ namespace TextSpelSkräck2._0
             Console.WriteLine(name);
             while (true)
             {
+
                 string userInput = Console.ReadLine();
+                userInput = userInput.ToLower();
+                string[] userInputArr = userInput.Split(' ');
+                Console.Clear();
+
+                if (userInputArr[0] == "go")
+                {
+                    int newRoom = GoToCommand(GoToAndPickUpFormatting(userInputArr));
+                    if (newRoom != id)
+                        return newRoom;
+                }
+
+                else if (userInputArr[0] == "use")
+                    UseCommand(InspectAndUseFormatting(userInputArr));
+
+                else if (userInputArr[0] == "inspect")
+                    InspectCommand(InspectAndUseFormatting(userInputArr));
+
+                else
+                    InsideRoomBaseSwitch(userInput);
+
+
+                /*string userInput = Console.ReadLine();
                 userInput = userInput.ToLower();
                 Console.Clear();
                 switch (userInput)
@@ -55,6 +79,19 @@ namespace TextSpelSkräck2._0
                         PickupRecipe();
                         break;
 
+                    case "inspect table":
+                    case "inspect round table":
+                    case "inspect wooden table":
+                        InspectTable();
+                        break;
+
+                    case "inspect counter":
+                    case "inspect dishes":
+                    case "inspect dirty dishes":
+                    case "inspect slab":
+                        InspectCounter();
+                        break;
+
                     case "use key":
                     case "use attic key":
                     case "use attickey":
@@ -74,7 +111,7 @@ namespace TextSpelSkräck2._0
                     default:
                         InsideRoomBaseSwitch(userInput);
                         break;
-                }
+                }*/
             }
         }
 
@@ -86,6 +123,26 @@ namespace TextSpelSkräck2._0
             Map.DiscoveredKitchen = true;
             Console.ReadKey();
             Console.Clear();
+        }
+
+        protected override int GoToCommand(string room)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void InspectCommand(string inspectedObject)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void PickUpCommand(string item)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void UseCommand(string item)
+        {
+            throw new NotImplementedException();
         }
 
         void PickupRecipe()
@@ -103,6 +160,21 @@ namespace TextSpelSkräck2._0
             }
             else
                 Console.WriteLine("You have already picked up the recipe");
+        }
+
+        void InspectTable()
+        {
+            Console.WriteLine("The round wooden table has an old tablecloth covering the old wood hidden beneath. \n" +
+                        "Different kinds of molded food cover the table, emitting a musty and rotten smell. \n" +
+                        "The thought that this was once used for eating dinner is almost impossible to imagine.");
+        }
+
+        void InspectCounter()
+        {
+            Console.WriteLine("The dishes have been piled up all over the counter, reaching the same height as you. Flies \n" +
+                        "are plentiful and seem to fight over the massive pile of rotten waste, as if there was not \n" +
+                        "enough for all of them. Whoever used to live here, it seems like doing dishes was not on \n" +
+                        "their priority list.");
         }
 
         void UseKey()
@@ -131,7 +203,18 @@ namespace TextSpelSkräck2._0
         void ModernCodeLockRequirements()
         {
             if (Inventory.IsConsumed(2) && AtticIsLocked)
+            {
                 ModernCodeLock();
+                if (!AtticIsLocked)
+                {
+                    Console.WriteLine("The machine beeps as it prints out “correct” onto the display screen. To your right, the ceiling \n" +
+                        "slowly opens, and after a few seconds a metallic ladder starts descending from above. This \n" +
+                        "must lead to the attic.");
+                    Console.WriteLine("\nPress any key to continue");
+                    Console.ReadKey();
+                    Console.Clear();
+                }
+            }
 
             else if (!Inventory.IsConsumed(2))
                 Console.WriteLine("You cannot see a puzzle nearby");
@@ -147,11 +230,156 @@ namespace TextSpelSkräck2._0
                 Console.ReadKey();
                 Console.Clear();
             }
+
         }
         void ModernCodeLock()
         {
-            
+            bool interactingWithPuzzle = true;
+            while (interactingWithPuzzle)
+            {
+                
+                int[] insertedNumbers = InsertCodeLockNumbers();
+                if (insertedNumbers[0] == -1)
+                    return;
+
+                if (GetCodeLockResults(insertedNumbers))
+                    return;
+            }
         }
+
+        int[] InsertCodeLockNumbers()
+        {
+            int[] insertedNumbers = new int[3];
+            for (int i = 0; i < 3; i++)
+            {
+                DisplayCodeLock(i, insertedNumbers);
+                insertedNumbers[i] = GetCodeLockInput();
+
+                if (insertedNumbers[i] == -1)
+                {
+                    insertedNumbers[0] = -1;
+                    return insertedNumbers;
+                }
+
+                Console.Clear();
+            }
+            DisplayCodeLock(3, insertedNumbers);
+            Thread.Sleep(1000);
+            Console.Clear();
+            return insertedNumbers;
+        }
+
+        void DisplayCodeLock(int currentLoop, int[] insertedNumbers)
+        {
+            Console.WriteLine("-----------------------");
+            Console.Write("|       ");
+            for (int i = 0; i < 3; i++)
+            {
+                if (currentLoop > i)
+                    Console.Write($"{insertedNumbers[i]} ");
+                else
+                    Console.Write("- ");
+            }
+            Console.WriteLine("        |");
+            Console.WriteLine("-----------------------");
+            //Console.WriteLine("|       -  -  -       |");
+        }
+        int GetCodeLockInput()
+        {
+            while (true)
+            {
+                Console.ForegroundColor = ConsoleColor.Black;
+                ConsoleKeyInfo consoleKey = Console.ReadKey();
+                switch (consoleKey.Key)
+                {
+
+                    case ConsoleKey.D0:
+                        Console.ForegroundColor = ConsoleColor.White;
+                        return 0;
+
+                    case ConsoleKey.D1:
+                        Console.ForegroundColor = ConsoleColor.White;
+                        return 1;
+
+                    case ConsoleKey.D2:
+                        Console.ForegroundColor = ConsoleColor.White;
+                        return 2;
+
+                    case ConsoleKey.D3:
+                        Console.ForegroundColor = ConsoleColor.White;
+                        return 3;
+
+                    case ConsoleKey.D4:
+                        Console.ForegroundColor = ConsoleColor.White;
+                        return 4;
+
+                    case ConsoleKey.D5:
+                        Console.ForegroundColor = ConsoleColor.White;
+                        return 5;
+
+                    case ConsoleKey.D6:
+                        Console.ForegroundColor = ConsoleColor.White;
+                        return 6;
+
+                    case ConsoleKey.D7:
+                        Console.ForegroundColor = ConsoleColor.White;
+                        return 7;
+
+                    case ConsoleKey.D8:
+                        Console.ForegroundColor = ConsoleColor.White;
+                        return 8;
+
+                    case ConsoleKey.D9:
+                        Console.ForegroundColor = ConsoleColor.White;
+                        return 9;
+
+                    case ConsoleKey.Escape:
+                        Console.ForegroundColor = ConsoleColor.White;
+                        return -1;
+                        
+
+                }
+            }
+        }
+
+        bool GetCodeLockResults(int[] insertedNumbers)
+        {
+            if (CodeLockCombinationIsCorrect(insertedNumbers))
+            {
+                DisplayCorrectAnswer();
+                Thread.Sleep(2000);
+                AtticIsLocked = false;
+                Console.Clear();
+                 return true;
+            }
+            else
+            {
+                DisplayIncorrectAnswer();
+                Thread.Sleep(2000);
+                Console.Clear();
+                return false;
+            }
+        }
+
+        bool CodeLockCombinationIsCorrect(int[] insertedNumbers)
+        {
+            return insertedNumbers[0] == 1 && insertedNumbers[1] == 3 && insertedNumbers[2] == 5;
+        }
+
+        void DisplayCorrectAnswer()
+        {
+            Console.WriteLine("-----------------------");
+            Console.WriteLine("|    C O R R E C T    |");
+            Console.WriteLine("-----------------------");
+        }
+
+        void DisplayIncorrectAnswer()
+        {
+            Console.WriteLine("-----------------------");
+            Console.WriteLine("|  I N C O R R E C T  |");
+            Console.WriteLine("-----------------------");
+        }
+
 
         protected override void LookAround()
         {

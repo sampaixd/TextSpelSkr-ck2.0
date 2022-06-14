@@ -52,6 +52,33 @@ namespace TextSpelSkräck2._0
             }
         }
 
+        protected string GoToAndPickUpFormatting(string[] insertedCommand)
+        {
+            string formattedString = "";
+            for (int i = 2; i < insertedCommand.Length; i++)
+            {
+                formattedString += insertedCommand[i] + " ";
+            }
+            return formattedString.Remove(formattedString.Length - 1);  // removes the last character
+        }
+
+        protected abstract int GoToCommand(string room);
+
+        protected string InspectAndUseFormatting(string[] insertedCommand)
+        {
+            string formattedString = "";
+            for (int i = 1; i < insertedCommand.Length; i++)
+            {
+                formattedString += insertedCommand[i] + " ";
+            }
+            return formattedString.Remove(formattedString.Length - 1);  // removes the last character
+        }
+        protected abstract void InspectCommand(string inspectedObject);
+
+        protected abstract void PickUpCommand(string item);
+
+        protected abstract void UseCommand(string item);
+
         protected abstract void FirstEntry();
 
         protected abstract void LookAround();

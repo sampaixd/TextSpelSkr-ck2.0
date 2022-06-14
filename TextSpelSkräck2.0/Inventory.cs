@@ -91,16 +91,11 @@ namespace TextSpelSkräck2._0
             {
                 case ConsoleKey.W:
                 case ConsoleKey.UpArrow:
-                    if (currentlySelectedItem <= 0)
-                        return currentlyUnlockedAmmount - 1;
-                    return --currentlySelectedItem;
-                    
+                    return (currentlySelectedItem <= 0) ? currentlyUnlockedAmmount - 1 : --currentlySelectedItem;
 
                 case ConsoleKey.S:
                 case ConsoleKey.DownArrow:
-                    if (currentlySelectedItem >= currentlyUnlockedAmmount - 1)
-                        return 0;
-                    return ++currentlySelectedItem;
+                    return (currentlySelectedItem >= currentlyUnlockedAmmount - 1) ? 0 : ++currentlySelectedItem;
 
                 case ConsoleKey.Escape:
                     return -1;

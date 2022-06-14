@@ -8,7 +8,7 @@ namespace TextSpelSkräck2._0
 {
     internal class Outdoors : Room
     {
-        public Outdoors() : base("outdoors", 0)
+        public Outdoors() : base("Outdoors", 0)
         { }
 
         public override int InsideRoom()
@@ -23,37 +23,26 @@ namespace TextSpelSkräck2._0
             {
                 string userInput = Console.ReadLine();
                 userInput = userInput.ToLower();
+                string[] userInputArr = userInput.Split(' ');
                 Console.Clear();
-                switch(userInput)
+                
+                if (userInputArr[0] == "go")
                 {
-                    case "go to entrance":
-                    case "go to main hall":
-                    case "go to mainhall":
-                    case "go to house":
-                    case "go inside":
-                    case "go to estate":
-                        return 1;
-
-
-                    case "use uv flashlight":
-                    case "use uv":
-                    case "use flashlight":
-                    case "use uvflashlight":
-                        UseUVFlashlight();
-                        break;
-
-
-                    case "use car":
-                    case "go to car":
-                    case "drive away":
-                    case "drive":
-                    case "leave":
-                        return -1;
-
-                    default:
-                        InsideRoomBaseSwitch(userInput);
-                        break;
+                    int newRoom = GoToCommand(GoToAndPickUpFormatting(userInputArr));
+                    if (newRoom != id)
+                        return newRoom;
                 }
+
+                else if (userInputArr[0] == "use")
+                    UseCommand(InspectAndUseFormatting(userInputArr));
+
+                else if (userInputArr[0] == "inspect")
+                    InspectCommand(InspectAndUseFormatting(userInputArr));
+
+                else if (userInputArr[0] == "pick")
+
+                else
+                    InsideRoomBaseSwitch(userInput);
             }
         }
 
@@ -103,7 +92,58 @@ namespace TextSpelSkräck2._0
             }
         }
 
-        void UseUVFlashlight()
+        protected override int GoToCommand(string room)
+        {
+            switch (room)
+            {
+                case "entrance":
+                case "main hall":
+                case "mainhall":
+                case "house":
+                case "inside":
+                case "estate":
+                    return 1;
+
+                case "car":
+                    return -1;
+
+                default:
+                    Console.WriteLine("Invalid input, try typing 'go to entrance' to enter the estate");
+                    return id;
+            }
+        }
+
+        // currently there are no inspect commands for outside
+        protected override void InspectCommand(string inspectedObject)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void PickUpCommand(string item)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void UseCommand(string item)
+        {
+            switch (item)
+            {
+                case "flashlight":
+                case "uv":
+                case "uvflashlight":
+                case "uv flashlight":
+                    UseUVFlashlight();
+                    break;
+
+                default:
+                    Console.WriteLine("Invalid input, try typing 'go to entrance' to enter the estate");
+                    break;
+
+            }
+
+            }
+
+            void UseUVFlashlight()
         {
             if (!DocumentManager.IsPickedUp(12))
             {
