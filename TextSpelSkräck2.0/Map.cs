@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 namespace TextSpelSkräck2._0
 {
     internal static class Map
-    {
-        static bool discoveredMainhall;
-        static bool discoveredBedroom;
-        static bool discoveredKitchen;
-        static bool discoveredToolshed;
-        static bool discoveredBasementStairs;
-        static bool discoveredCell;
-        static bool discoveredStorage;
-        static bool discoveredWalls;
-        static bool discoveredToolshedShortcut;
-        static bool discoveredAttic;
+    {                                           // id
+        static bool discoveredMainhall;         // 1
+        static bool discoveredBedroom;          // 2
+        static bool discoveredKitchen;          // 3
+        static bool discoveredToolshed;         // 4
+        static bool discoveredBasementStairs;   // 5
+        static bool discoveredCell;             // 6
+        static bool discoveredStorage;          // 7
+        static bool discoveredWalls;            // 8
+        static bool discoveredToolshedShortcut; // 9
+        static bool discoveredAttic;            // 10
         static Map()
         {
             discoveredMainhall = false;

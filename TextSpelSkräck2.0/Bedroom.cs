@@ -16,9 +16,10 @@ namespace TextSpelSkräck2._0
         {
             if (!Map.DiscoveredBedroom)
                 FirstEntry();
-            
+            Console.WriteLine(name);
             while (true)
             {
+                
                 string userInput = Console.ReadLine();
                 userInput = userInput.ToLower();
                 Console.Clear();
@@ -27,6 +28,25 @@ namespace TextSpelSkräck2._0
                     case "go to main hall":
                     case "go to mainhall":
                         return 1;
+
+                    case "go to basement":
+                    case "go to basement stairs":
+                    case "go downstairs":
+                    case "go to right door":
+                        if (!EventTriggers.BasementDoorIsLocked)
+                            return 5;
+                        else
+                            Console.WriteLine("You try to open the door, however it appears to be locked.");
+                        
+                        break;
+
+                    case "inspect cabinet":
+                        InspectCabinet();
+                        break;
+
+                    case "inspect bed":
+                        InspectBed();
+                        break;
 
                     case "use basement key":
                     case "use key":
@@ -43,7 +63,29 @@ namespace TextSpelSkräck2._0
 
         protected override void FirstEntry()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("You walk through the door to the left");
+            Console.WriteLine("Bedroom added to map");
+            Console.WriteLine("\nPress any key to continue");
+            Map.DiscoveredBedroom = true;
+            Console.ReadKey();
+            Console.Clear();
+
+        }
+
+        void InspectCabinet()
+        {
+            Console.WriteLine("The cabinet is made out of old planks, although they appear to have aged much better \n" +
+                        "compared to the rest of the house, probably because it is made by a different kind of tree. \n" +
+                        "The cabinet door has been torn out together with the hinges. Whatever caused this, it has an \n" +
+                        "incredible amount of strength.");
+        }
+
+        void InspectBed()
+        {
+            Console.WriteLine("The bed appears to be damp and molded, with multiple stains covering the mattress. The \n" +
+                        "pillow has been torn up, revealing the few feathers still left inside. The cover has been \n" +
+                        "moved to the side, as if someone just woke up. Although somewhat molded, the cover \n" +
+                        "appears to be in much better shape than the rest of the bed.");
         }
 
         void UseKey()
@@ -78,7 +120,11 @@ namespace TextSpelSkräck2._0
 
         protected override void LookAround()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("The first thing you see is a bed right in front of you. The walls, unlike the rest of the house are \n" +
+                "covered with wallpaper, and appear to be newer than the rest of the house, as if someone \n" +
+                "had been renovating the room recently. next to the bed there is a cabinet with the door torn \n" +
+                "out, completely empty. To the right of the room there is another door, that contrary to the rest \n" +
+                "of the room is even more molded and damp than the rest of the house.");
         }
     }
 }

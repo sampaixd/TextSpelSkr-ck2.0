@@ -18,7 +18,43 @@ namespace TextSpelSkräck2._0
                 FirstEntry();
                 return 1;
             }
-            throw new NotImplementedException();
+            Console.WriteLine(name);
+            while(true)
+            {
+                string userInput = Console.ReadLine();
+                userInput = userInput.ToLower();
+                Console.Clear();
+                switch(userInput)
+                {
+                    case "go to entrance":
+                    case "go to main hall":
+                    case "go to mainhall":
+                    case "go to house":
+                    case "go inside":
+                    case "go to estate":
+                        return 1;
+
+
+                    case "use uv flashlight":
+                    case "use uv":
+                    case "use flashlight":
+                    case "use uvflashlight":
+                        UseUVFlashlight();
+                        break;
+
+
+                    case "use car":
+                    case "go to car":
+                    case "drive away":
+                    case "drive":
+                    case "leave":
+                        return -1;
+
+                    default:
+                        InsideRoomBaseSwitch(userInput);
+                        break;
+                }
+            }
         }
 
 
@@ -31,7 +67,7 @@ namespace TextSpelSkräck2._0
             "have been bordered up, making it impossible to see what the estate is hiding. A couple \n" +
             "meters in front of you there is a wooden door swinging freely in the wind, inviting you to \n" +
             "come in.");
-            Console.WriteLine("\nType 'go to entrance' to enter the house");
+            Console.WriteLine("\nType \"go to entrance\" to enter the house");
             bool loop = true;
             string input;
             while (loop)
@@ -45,6 +81,7 @@ namespace TextSpelSkräck2._0
                     case "go inside":
                     case "go to house":
                     case "go to entrance":
+                    case "go to estate":
                         loop = false;
                         break;
 
@@ -65,9 +102,48 @@ namespace TextSpelSkräck2._0
                 }
             }
         }
+
+        void UseUVFlashlight()
+        {
+            if (!DocumentManager.IsPickedUp(12))
+            {
+                Console.WriteLine("You shine the purple rays onto the bloodpool laying on the porch, revealing a lone arm \n" +
+                    "violently torn off, with chunks of flesh sticking out as well as a broken bone where the \n" +
+                    "shoulder should be. The arm has a white sleeve covering most of the skin, which probably is \n" +
+                    "for the best. Looking at the hand, it has a note in their open palm, almost as if it was offering \n" +
+                    "you the piece of paper. You pick up the note that surprisingly is free from bloodstains, yet it \n" +
+                    "appears to only have a bunch of random symbols on it. ");
+                Console.WriteLine("\n" + DocumentManager.Content(12));
+                Console.WriteLine("\nUnknown document added to inventory");
+                Console.WriteLine("\nPress any key to continue");
+                DocumentManager.UnlockDocument(12);
+                Console.ReadKey();
+                Console.Clear();
+            }
+            else
+            {
+                Console.WriteLine("You have already used the UV flashlight");
+            }
+        }
+
+        // NOTE: this is only used in the lategame
         protected override void LookAround()
         {
-            throw new NotImplementedException();
+            Console.Write("Standing on the porch, you look out to the overgrown grass, dancing calmly in the wind. Out \n" +
+                "on the dirt road your car is patiently waiti for young, ready to leave at a moment's notice. Its \n" +
+                "shining red coat of paint, with slight mud stains covering its lower parts feels out of this \n" +
+                "world, having gotten used to the molded walls and the musty smell inside the estate.");
+            if (DocumentManager.IsPickedUp(12))
+            {
+                Console.WriteLine("On the \n" +
+                    "porch with you is the torn off arm, severely malformed and bathing in its own blood.");
+            }
+            else
+            {
+                Console.WriteLine("On the \n" +
+                    "porch with you is a crimson pool of blood, having yet to coagulate just like the ones found \n" +
+                    "inside.");
+            }
         }
     }
 }

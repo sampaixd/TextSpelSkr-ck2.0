@@ -21,6 +21,7 @@ namespace TextSpelSkräck2._0
          * List of members operation Gestalt (Toolshed)     9
          * Unsent letter from Ellen (Attic)                 10
          * Mission Briefing operation Gestalt (Attic)       11
+         * Unknown document (Outdoors)                      12
          */
         static DocumentManager()
         {
@@ -137,6 +138,10 @@ namespace TextSpelSkräck2._0
                 "will be of any effect. Therefore, you will also be given a UV flashlight, as the preparation \n" +
                 "team managed to reveal the corpse of the former owner using a UV flashlight. It is only a \n" +
                 "theory at the moment, but the UV light could prove to be an effective weapon."));
+
+            documents.Add(new Document("Unknown document (Outdoors)", "It’s just a bunch of weird symbols, but they have to represent something, right?",
+                "..- ... . .-. -. .- -- . ---... / --. .- -- .--./\n" +
+                ".--. .- ... ... .----- .-. - ..---... / ..-. .--. .- .. .- -. . ... ..--. ....-"));
 
             documents[0].IsPickedUp = true; // you start with this unlocked
         }

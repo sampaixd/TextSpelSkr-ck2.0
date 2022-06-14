@@ -18,8 +18,8 @@ namespace TextSpelSkräck2._0
                 FirstEntry();
             if (Map.DiscoveredWalls)
                 unlockedHatch = true;
-
-            while(true)
+            Console.WriteLine(name);
+            while (true)
             {
                 string userInput = Console.ReadLine();
                 userInput = userInput.ToLower();

@@ -16,13 +16,25 @@ namespace TextSpelSkräck2._0
         {
             if (!Map.DiscoveredMainHall)
                 FirstEntry();
-            while(true)
+            Console.WriteLine(name);
+
+            while (true)
             { 
                 string userInput = Console.ReadLine();
                 userInput = userInput.ToLower();
                 Console.Clear();
                 switch (userInput)
                 {
+
+                    case "go outside":
+                    case "go out":
+                        if (Inventory.IsConsumed(4))
+                            return 0;
+                        else
+                            Console.WriteLine("You pull the rusted handle to no avail. The molded door stands surprisingly strong, not \n" +
+                                "budging a millimeter regardless of how much you push. ");
+                        break;
+
                     // going to bedroom
                     case "go to bedroom":
                     case "go to left room":
@@ -62,6 +74,10 @@ namespace TextSpelSkräck2._0
                         UseUVFlashlight();
                         break;
 
+                    case "use key":
+                    case "use mysterious key":
+                        break;
+
                     default:
                         InsideRoomBaseSwitch(userInput);
                         break;
@@ -69,10 +85,6 @@ namespace TextSpelSkräck2._0
             }
         }
 
-        /*protected override void InsideRoomBaseSwitch(string userInput)
-        {
-            base.InsideRoomBaseSwitch(userInput);
-        }*/
 
         void InspectBlood()
         {
@@ -139,6 +151,24 @@ namespace TextSpelSkräck2._0
             {
                 Console.WriteLine("you do not have a UV flashlight");
             }
+        }
+
+        void UseKey()
+        {
+            if (Inventory.IsPickedUp(4) && !Inventory.IsConsumed(4))
+            {
+                Console.WriteLine("You try inserting the mysterious key into the rusted keyhole, and to your surprise it fits \n" +
+                    "perfectly. Slowly turning the key, a click is suddenly heard. As you grab the rusted door \n" +
+                    "handle and slowly push it down, you feel the old hinges fighting against you as you push the \n" +
+                    "door open. It’s like you had forgotten what fresh air smells like, when a cold sweet breeze of \n" +
+                    "air slaps you in the face after the door has been pushed aside, filling you with a sense of \n" +
+                    "rejuvenation.");
+            }
+            else if (Inventory.IsConsumed(4))
+                Console.WriteLine("You have already used the key");
+
+            else
+                Console.WriteLine("You do not have a key that fits");
         }
 
         protected override void FirstEntry()
