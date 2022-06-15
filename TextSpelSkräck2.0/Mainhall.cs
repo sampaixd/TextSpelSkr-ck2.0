@@ -19,72 +19,188 @@ namespace TextSpelSkräck2._0
             Console.WriteLine(name);
 
             while (true)
-            { 
+            {
                 string userInput = Console.ReadLine();
                 userInput = userInput.ToLower();
+                string[] userInputArr = userInput.Split(' ');
                 Console.Clear();
-                switch (userInput)
+
+                if (userInputArr[0] == "go")
                 {
-
-                    case "go outside":
-                    case "go out":
-                        if (Inventory.IsConsumed(4))
-                            return 0;
-                        else
-                            Console.WriteLine("You pull the rusted handle to no avail. The molded door stands surprisingly strong, not \n" +
-                                "budging a millimeter regardless of how much you push. ");
-                        break;
-
-                    // going to bedroom
-                    case "go to bedroom":
-                    case "go to left room":
-                    case "go to left":
-                    case "go to left door":
-                        return 2;
-
-
-                    // going to kitchen
-                    case "go to kitchen":
-                    case "go to front door":
-                    case "go to front room":
-                    case "go to center room":
-                    case "go forward":
-                    case "go to center":
-                    case "go to front":
-                        return 3;
-
-                    // going to toolshed
-                    case "go to toolshed":
-                    case "go to right door":
-                    case "go to right room":
-                    case "go to right":
-                        return 4;
-
-
-                    case "inspect pool of blood":
-                    case "inspect blood":
-                    case "inspect pool":
-                        InspectBlood();
-                        break;
-
-                    case "use uvflashlight":
-                    case "use uv flashlight":
-                    case "use flashlight":
-                    case "use uv":
-                        UseUVFlashlight();
-                        break;
-
-                    case "use key":
-                    case "use mysterious key":
-                        break;
-
-                    default:
-                        InsideRoomBaseSwitch(userInput);
-                        break;
+                    int newRoom = GoToCommand(GoToAndPickUpFormatting(userInputArr));
+                    if (newRoom != id)
+                        return newRoom;
                 }
+
+                else if (userInputArr[0] == "inspect")
+                    InspectCommand(InspectAndUseFormatting(userInputArr));
+
+                else if (userInputArr[0] == "pick")
+                    PickUpCommand(GoToAndPickUpFormatting(userInputArr));
+
+                else if (userInputArr[0] == "use")
+                    UseCommand(InspectAndUseFormatting(userInputArr));
+
+                else
+                    InsideRoomBaseSwitch(userInput);
             }
         }
 
+
+        protected override void FirstEntry()
+        {
+            bool lightsOff = true;
+
+            Console.WriteLine("You slowly push aside the dark creaking front door, and see a room hazily covered in \n" +
+                            "darkness. The room is filled with a musty smell, and your mouth is filled with the taste of wet \n" +
+                            "paper. The taste and smell is almost enough to make you vomit. As you enter you hear the \n" +
+                            "door vionently shutting behind you, covering you in a thick and black darkness. Feeling the \n" +
+                            "door handle, it appears to have locked.");
+            Console.WriteLine("\nType “look around“ to inspect your enviroment");
+
+            while (lightsOff)
+            {
+                string input = Console.ReadLine();
+                input = input.ToLower();
+                Console.Clear();
+                switch (input)
+                {
+                    case "look around":
+                        Console.WriteLine("The room is pitch black, filled with a musty smell, and your mouth is filled with the taste of wet \n" +
+                            "paper. The taste and smell is almost enough to make you vomit. You can hear the sound of \n" +
+                            "creaking metallic slowly but methodically swinging back and forth above you, however it is \n" +
+                            "impossible to see what it is through the thick darkness. You can also hear the sound of \n" +
+                            "something liquid slowly dripping onto the floor. Feeling around the rotten and damp walls, \n" +
+                            "you notice what feels like a lightswitch next to you.");
+                        Console.WriteLine("\nType “help“ to get a list of actions and try to figure out what to do next");
+                        break;
+
+                    case "use lightswitch":
+                        Console.WriteLine("The light blinds you with it’s surprising amount of power. You can now see the entire main hall \n" +
+                            "bathing in light. Just like on the outside, the walls, floor and roof is made out of old \n" +
+                            "planks with mold partially covering the walls. The planks look like place has not been renovated \n" +
+                            "for over a century, and as if it could implode and bury you any second. There is a chandelier \n" +
+                            "made out of pristine gold swinging back and forth, as if something was hanging in it. Right \n" +
+                            "below the chandelier there’s a pool of blood, with blood slowly dripping down adding to the \n" +
+                            "red pool on the floor, yet you cannot see the source of the blood. When looking around you \n" +
+                            "see 3 other doors, one to the left, one in front of you as well as one to the right.");
+                        Console.WriteLine("\nYou suddenly hear a voice from downstairs. It sounds just like… Ellen! You have to find a \n" +
+                            "way down to the basement.");
+
+                        lightsOff = false;
+                        break;
+                    case "help":
+                        Help.HelpMenu();
+                        Console.WriteLine("TIP: You have to turn on the lights");
+                        break;
+                    case "inventory":
+                        Inventory.ViewInventory();
+                        break;
+                    case "document":
+                    case "documents":
+                        //Documents(pickup, document, documenttext);
+                        break;
+                    default:
+                        Console.WriteLine("Invalid action, type “help“ for a list of actions");
+                        break;
+                }
+            }
+            Map.DiscoveredMainHall = true;
+            Console.WriteLine("\nMain hall added to map");
+            Console.WriteLine("\nPress any key to continue");
+        }
+
+        protected override int GoToCommand(string room)
+        {
+            switch(room)
+            {
+                case "outside":
+                case "out":
+                    if (Inventory.IsConsumed(4))
+                        return 0;
+                    else
+                        Console.WriteLine("You pull the rusted handle to no avail. The molded door stands surprisingly strong, not \n" +
+                            "budging a millimeter regardless of how much you push. ");
+                    return id;
+
+                // going to bedroom
+                case "bedroom":
+                case "left room":
+                case "left":
+                case "left door":
+                    return 2;
+
+
+                // going to kitchen
+                case "kitchen":
+                case "front door":
+                case "front room":
+                case "center room":
+                case "forward":
+                case "center":
+                case "front":
+                    return 3;
+
+                // going to toolshed
+                case "toolshed":
+                case "right door":
+                case "right room":
+                case "right":
+                    return 4;
+
+                default:
+                    Console.WriteLine("invalid input, please type \"help\" to get a list of avalible options");
+                    return id;
+            }
+        }
+
+        protected override void InspectCommand(string inspectedObject)
+        {
+            switch(inspectedObject)
+            {
+                case "pool of blood":
+                case "blood":
+                case "pool":
+                    InspectBlood();
+                    break;
+
+                default:
+                    Console.WriteLine("invalid input, please type \"help\" to get a list of avalible options");
+                    break;
+            }
+        }
+
+        protected override void PickUpCommand(string item)
+        {
+            switch(item)
+            {
+                default:
+                    Console.WriteLine("invalid input, please type \"help\" to get a list of avalible options");
+                    break;
+            }
+        }
+
+        protected override void UseCommand(string item)
+        {
+            switch(item)
+            {
+                case "uvflashlight":
+                case "uv flashlight":
+                case "flashlight":
+                case "uv":
+                    UseUVFlashlight();
+                    break;
+
+                case "key":
+                case "mysterious key":
+                    UseKey();
+                    break;
+
+                default:
+                    Console.WriteLine("invalid input, please type \"help\" to get a list of avalible options");
+                    break;
+            }
+        }
 
         void InspectBlood()
         {
@@ -171,68 +287,7 @@ namespace TextSpelSkräck2._0
                 Console.WriteLine("You do not have a key that fits");
         }
 
-        protected override void FirstEntry()
-        {
-            bool lightsOff = true;
-           
-            Console.WriteLine("You slowly push aside the dark creaking front door, and see a room hazily covered in \n" +
-                            "darkness. The room is filled with a musty smell, and your mouth is filled with the taste of wet \n" +
-                            "paper. The taste and smell is almost enough to make you vomit. As you enter you hear the \n" +
-                            "door vionently shutting behind you, covering you in a thick and black darkness. Feeling the \n" +
-                            "door handle, it appears to have locked.");
-            Console.WriteLine("\nType “look around“ to inspect your enviroment");
-            
-            while (lightsOff)
-            {
-                string input = Console.ReadLine();
-                input = input.ToLower();
-                Console.Clear();
-                switch (input)
-                {
-                    case "look around":
-                        Console.WriteLine("The room is pitch black, filled with a musty smell, and your mouth is filled with the taste of wet \n" +
-                            "paper. The taste and smell is almost enough to make you vomit. You can hear the sound of \n" +
-                            "creaking metallic slowly but methodically swinging back and forth above you, however it is \n" +
-                            "impossible to see what it is through the thick darkness. You can also hear the sound of \n" +
-                            "something liquid slowly dripping onto the floor. Feeling around the rotten and damp walls, \n" +
-                            "you notice what feels like a lightswitch next to you.");
-                        Console.WriteLine("\nType “help“ to get a list of actions and try to figure out what to do next");
-                        break;
 
-                    case "use lightswitch":
-                        Console.WriteLine("The light blinds you with it’s surprising amount of power. You can now see the entire main hall \n" +
-                            "bathing in light. Just like on the outside, the walls, floor and roof is made out of old \n" +
-                            "planks with mold partially covering the walls. The planks look like place has not been renovated \n" +
-                            "for over a century, and as if it could implode and bury you any second. There is a chandelier \n" +
-                            "made out of pristine gold swinging back and forth, as if something was hanging in it. Right \n" +
-                            "below the chandelier there’s a pool of blood, with blood slowly dripping down adding to the \n" +
-                            "red pool on the floor, yet you cannot see the source of the blood. When looking around you \n" +
-                            "see 3 other doors, one to the left, one in front of you as well as one to the right.");
-                        Console.WriteLine("\nYou suddenly hear a voice from downstairs. It sounds just like… Ellen! You have to find a \n" +
-                            "way down to the basement.");
-
-                        lightsOff = false;
-                        break;
-                    case "help":
-                        Help.HelpMenu();
-                        Console.WriteLine("TIP: You have to turn on the lights");
-                        break;
-                    case "inventory":
-                        Inventory.ViewInventory();
-                        break;
-                    case "document":
-                    case "documents":
-                        //Documents(pickup, document, documenttext);
-                        break;
-                    default:
-                        Console.WriteLine("Invalid action, type “help“ for a list of actions");
-                        break;
-                }
-            }
-            Map.DiscoveredMainHall = true;
-            Console.WriteLine("\nMain hall added to map");
-            Console.WriteLine("\nPress any key to continue");
-        }
 
         protected override void LookAround()
         {

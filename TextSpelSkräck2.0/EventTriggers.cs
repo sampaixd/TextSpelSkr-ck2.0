@@ -11,11 +11,14 @@ namespace TextSpelSkräck2._0
         // contains booleans that are not exclusive to one room, for example basement door gets locked while in storage/cell, 
         // and is used for traversal within the basement stairs as well
         static bool basementDoorIsLocked;
+        static bool secretPassageIsClosed;
         static EventTriggers()
         {
             basementDoorIsLocked = true;
+            secretPassageIsClosed = true;
         }
 
         public static bool BasementDoorIsLocked { get { return basementDoorIsLocked; } set { basementDoorIsLocked = value; } }
+        public static bool SecretPassageIsClosed { get { return secretPassageIsClosed; } set { secretPassageIsClosed = value;} }
     }
 }

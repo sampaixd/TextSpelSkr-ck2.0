@@ -19,46 +19,29 @@ namespace TextSpelSkräck2._0
             Console.WriteLine(name);
             while (true)
             {
-                
                 string userInput = Console.ReadLine();
                 userInput = userInput.ToLower();
+                string[] userInputArr = userInput.Split(' ');
                 Console.Clear();
-                switch (userInput)
+
+                if (userInputArr[0] == "go")
                 {
-                    case "go to main hall":
-                    case "go to mainhall":
-                        return 1;
-
-                    case "go to basement":
-                    case "go to basement stairs":
-                    case "go downstairs":
-                    case "go to downstairs":
-                    case "go to right door":
-                        if (!EventTriggers.BasementDoorIsLocked)
-                            return 5;
-                        else
-                            Console.WriteLine("You try to open the door, however it appears to be locked.");
-                        
-                        break;
-
-                    case "inspect cabinet":
-                        InspectCabinet();
-                        break;
-
-                    case "inspect bed":
-                        InspectBed();
-                        break;
-
-                    case "use basement key":
-                    case "use key":
-                    case "use item":
-                        UseKey();
-                        break;
-
-                    default:
-                        InsideRoomBaseSwitch(userInput);
-                        break;
+                    int newRoom = GoToCommand(GoToAndPickUpFormatting(userInputArr));
+                    if (newRoom != id)
+                        return newRoom;
                 }
+
+                else if (userInputArr[0] == "inspect")
+                    InspectCommand(InspectAndUseFormatting(userInputArr));
+
+                else if (userInputArr[0] == "pick")
+                    PickUpCommand(GoToAndPickUpFormatting(userInputArr));
+
+                else if (userInputArr[0] == "use")
+                    UseCommand(InspectAndUseFormatting(userInputArr));
+
+                else
+                    InsideRoomBaseSwitch(userInput);
             }
         }
 
@@ -71,6 +54,75 @@ namespace TextSpelSkräck2._0
             Console.ReadKey();
             Console.Clear();
 
+        }
+
+        protected override int GoToCommand(string room)
+        {
+            switch(room)
+            {
+                case "main hall":
+                case "mainhall":
+                    return 1;
+
+                case "basement":
+                case "basement stairs":
+                case "downstairs":
+                case "right door":
+                case "right":
+                    if (!EventTriggers.BasementDoorIsLocked)
+                        return 5;
+                    else
+                        Console.WriteLine("You try to open the door, however it appears to be locked.");
+                    return id;
+
+                default:
+                    Console.WriteLine("invalid input, please type \"help\" to get a list of avalible options");
+                    return id;
+            }
+        }
+
+        protected override void InspectCommand(string inspectedObject)
+        {
+            switch(inspectedObject)
+            {
+                case "cabinet":
+                    InspectCabinet();
+                    break;
+
+                case "bed":
+                    InspectBed();
+                    break;
+
+                default:
+                    Console.WriteLine("invalid input, please type \"help\" to get a list of avalible options");
+                    break;
+            }
+        }
+
+        protected override void PickUpCommand(string item)
+        {
+            switch(item)
+            {
+                default:
+                    Console.WriteLine("invalid input, please type \"help\" to get a list of avalible options");
+                    break;
+            }
+        }
+
+        protected override void UseCommand(string item)
+        {
+            switch(item)
+            {
+                case "basement key":
+                case "key":
+                case "item":
+                    UseKey();
+                    break;
+
+                default:
+                    Console.WriteLine("invalid input, please type \"help\" to get a list of avalible options");
+                    break;
+            }
         }
 
         void InspectCabinet()

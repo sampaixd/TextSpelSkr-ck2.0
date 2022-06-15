@@ -11,7 +11,7 @@ namespace TextSpelSkräck2._0
         static void Main(string[] args)
         {
             List<Room> rooms = GenerateRooms();
-            TestMethod();
+            //TestMethod();
             Prologue();
             int currentRoom = 0;
             while (currentRoom >= 0)
@@ -63,9 +63,13 @@ namespace TextSpelSkräck2._0
             Console.WriteLine("Loading game...");
 
             List<Room> rooms = new List<Room>();
+
+            // rooms are added in order of their id
             rooms.Add(new Outdoors());
             rooms.Add(new Mainhall());
             rooms.Add(new Bedroom());
+            rooms.Add(new Kitchen());
+            rooms.Add(new Toolshed());
 
             Console.WriteLine("Game loaded, press any key to start");
             Console.ReadKey();

@@ -23,65 +23,27 @@ namespace TextSpelSkräck2._0
             {
                 string userInput = Console.ReadLine();
                 userInput = userInput.ToLower();
+                string[] userInputArr = userInput.Split(' ');
                 Console.Clear();
 
-                switch(userInput)
+                if (userInputArr[0] == "go")
                 {
-                    case "go to main hall":
-                        return 1;
-
-                    case "use hatch":
-                    case "go to hatch":
-                    case "go go walls":
-                    case "go downstairs":
-
-                        if (unlockedHatch)
-                            return 8;
-                        else
-                            Console.WriteLine("You try to open the hatch, however it appears to be locked");
-                        break;
-
-                    case "pick up key":
-                    case "pick up basement key":
-                    case "pick up stained key":
-                    case "pick up note":
-                    case "pick up document":
-                    case "inspect pool of blood":
-                    case "inspect pool":
-                    case "inspect blood":
-                        GrabKey();
-                        break;
-
-
-                    case "inspect body":
-                    case "inspect corpse":
-                        if (DocumentManager.IsPickedUp(7))
-                            GrabKey();
-                        
-                        else
-                            Console.WriteLine("there is no body around here");
-                        break;
-
-                    case "inspect tools":
-                    case "inpect gardening tools":
-                    case "inspect tools on wall":
-                    case "inspect gardening equiment":
-                    case "inspect equipment":
-                    case "inspect wall":
-                        InspectGardeningTools();
-                        break;
-
-                    case "use flashlight":
-                    case "use uv flashlight":
-                    case "use uvflashlight":
-                    case "use uv":
-                        UseUVFlashlight();
-                        break;
-
-                    default:
-                        InsideRoomBaseSwitch(userInput);
-                        break;
+                    int newRoom = GoToCommand(GoToAndPickUpFormatting(userInputArr));
+                    if (newRoom != id)
+                        return newRoom;
                 }
+
+                else if (userInputArr[0] == "inspect")
+                    InspectCommand(InspectAndUseFormatting(userInputArr));
+
+                else if (userInputArr[0] == "pick")
+                    PickUpCommand(GoToAndPickUpFormatting(userInputArr));
+
+                else if (userInputArr[0] == "use")
+                    UseCommand(InspectAndUseFormatting(userInputArr));
+
+                else
+                    InsideRoomBaseSwitch(userInput);
             }
         }
 
@@ -95,6 +57,96 @@ namespace TextSpelSkräck2._0
             Console.Clear();
         }
 
+        protected override int GoToCommand(string room)
+        {
+            switch(room)
+            {
+                case "main hall":
+                    return 1;
+
+                case "hatch":
+                case "walls":
+                case "downstairs":
+                    if (unlockedHatch)
+                        return 8;
+                    else
+                        Console.WriteLine("You try to open the hatch, however it appears to be locked");
+                    return id;
+                    
+                default:
+                    Console.WriteLine("invalid input, please type \"help\" to get a list of avalible options");
+                    return id;
+            }
+        }
+
+        protected override void InspectCommand(string inspectedObject)
+        {
+            switch(inspectedObject)
+            {
+                case "pool of blood":
+                case "pool":
+                case "blood":
+                    GrabKey();
+                    break;
+
+
+                case "body":
+                case "corpse":
+                    if (DocumentManager.IsPickedUp(7))
+                        GrabKey();
+
+                    else
+                        Console.WriteLine("there is no body around here");
+                    break;
+
+                case "tools":
+                case "gardening tools":
+                case "tools on wall":
+                case "gardening equiment":
+                case "equipment":
+                case "wall":
+                    InspectGardeningTools();
+                    break;
+
+                default:
+                    Console.WriteLine("invalid input, please type \"help\" to get a list of avalible options");
+                    break;
+            }
+        }
+
+        protected override void PickUpCommand(string item)
+        {
+            switch(item)
+            {
+                case "key":
+                case "basement key":
+                case "stained key":
+                case "note":
+                case "document":
+                    GrabKey();
+                    break;
+                default:
+                    Console.WriteLine("invalid input, please type \"help\" to get a list of avalible options");
+                    break;
+            }
+        }
+
+        protected override void UseCommand(string item)
+        {
+            switch(item)
+            {
+                case "flashlight":
+                case "uv flashlight":
+                case "uvflashlight":
+                case "uv":
+                    UseUVFlashlight();
+                    break;
+
+                default:
+                    Console.WriteLine("invalid input, please type \"help\" to get a list of avalible options");
+                    break;
+            }
+        }
         void GrabKey()
         {
             if (!Inventory.IsPickedUp(0))

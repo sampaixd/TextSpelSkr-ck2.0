@@ -34,84 +34,18 @@ namespace TextSpelSkräck2._0
                         return newRoom;
                 }
 
-                else if (userInputArr[0] == "use")
-                    UseCommand(InspectAndUseFormatting(userInputArr));
 
                 else if (userInputArr[0] == "inspect")
                     InspectCommand(InspectAndUseFormatting(userInputArr));
 
+                else if (userInputArr[0] == "pick")
+                    PickUpCommand(GoToAndPickUpFormatting(userInputArr));
+
+                else if (userInputArr[0] == "use")
+                    UseCommand(InspectAndUseFormatting(userInputArr));
+
                 else
                     InsideRoomBaseSwitch(userInput);
-
-
-                /*string userInput = Console.ReadLine();
-                userInput = userInput.ToLower();
-                Console.Clear();
-                switch (userInput)
-                {
-                    case "go to main hall":
-                    case "go to mainhall":
-                    case "go to hall":
-                        return 1;
-
-                    case "go to attic":
-                    case "go upstairs":
-                    case "go to the attic":
-                    case "go to ladder":
-                    case "go to metallic ladder":
-                        if (AtticIsLocked)
-                            return 10;
-                        else
-                        {
-                            Console.WriteLine("You look around for the attic, however it is nowhere to be found");
-                            if (Inventory.IsConsumed(2))
-                                Console.WriteLine("Maybe something will happen if I manage to enter the correct code");
-                        }
-                        break;
-
-                    case "pick up note":
-                    case "pick up document":
-                    case "pick up recipe":
-                    case "pick up book":
-                    case "pick up cookbook":
-                    case "inspect book":
-                    case "inspect recipe book":
-                        PickupRecipe();
-                        break;
-
-                    case "inspect table":
-                    case "inspect round table":
-                    case "inspect wooden table":
-                        InspectTable();
-                        break;
-
-                    case "inspect counter":
-                    case "inspect dishes":
-                    case "inspect dirty dishes":
-                    case "inspect slab":
-                        InspectCounter();
-                        break;
-
-                    case "use key":
-                    case "use attic key":
-                    case "use attickey":
-                    case "use item":
-                        UseKey();
-                        break;
-
-                    case "use puzzle":
-                    case "use codelock":
-                    case "use modern codelock":
-                    case "inspect codelock":
-                    case "inspect puzzle":
-                        ModernCodeLockRequirements();
-                        break;
-
-
-                    default:
-                        InsideRoomBaseSwitch(userInput);
-                        break;
-                }*/
             }
         }
 
@@ -127,22 +61,108 @@ namespace TextSpelSkräck2._0
 
         protected override int GoToCommand(string room)
         {
-            throw new NotImplementedException();
+            switch(room)
+            {
+                case "main hall":
+                case "mainhall":
+                case "hall":
+                    return 1;
+
+                case "attic":
+                case "tairs":
+                case "the attic":
+                case "ladder":
+                case "metallic ladder":
+                    if (AtticIsLocked)
+                        return 10;
+                    else
+                    {
+                        Console.WriteLine("You look around for the attic, however it is nowhere to be found");
+                        if (Inventory.IsConsumed(2))
+                            Console.WriteLine("Maybe something will happen if I manage to enter the correct code");
+                        return id;
+                    }
+
+                default:
+                    Console.WriteLine("invalid input, please type \"help\" to get a list of avalible options");
+                    return id;
+            }
         }
 
         protected override void InspectCommand(string inspectedObject)
         {
-            throw new NotImplementedException();
+            switch(inspectedObject)
+            {
+                case "book":
+                case "recipe book":
+                    PickupRecipe();
+                    break;
+
+                case "table":
+                case "round table":
+                case "wooden table":
+                    InspectTable();
+                    break;
+
+                case "counter":
+                case "dishes":
+                case "dirty dishes":
+                case "slab":
+                    InspectCounter();
+                    break;
+
+                case "puzzle":
+                case "codelock":
+                case "modern codelock":
+                    ModernCodeLockRequirements();
+                    break;
+
+                default:
+                    Console.WriteLine("invalid input, please type \"help\" to get a list of avalible options");
+                    break;
+            }
         }
 
         protected override void PickUpCommand(string item)
         {
-            throw new NotImplementedException();
+            switch(item)
+            {
+                case "note":
+                case "document":
+                case "recipe":
+                case "book":
+                case "cookbook":
+                case "recipe book":
+                    PickupRecipe();
+                    break;
+
+                default:
+                    Console.WriteLine("invalid input, please type \"help\" to get a list of avalible options");
+                    break;
+            }
         }
 
         protected override void UseCommand(string item)
         {
-            throw new NotImplementedException();
+            switch(item)
+            {
+                case "key":
+                case "attic key":
+                case "attickey":
+                case "item":
+                    UseKey();
+                    break;
+
+                case "puzzle":
+                case "codelock":
+                case "modern codelock":
+                    ModernCodeLockRequirements();
+                    break;
+
+                default:
+                    Console.WriteLine("invalid input, please type \"help\" to get a list of avalible options");
+                    break;
+            }
         }
 
         void PickupRecipe()
@@ -383,7 +403,31 @@ namespace TextSpelSkräck2._0
 
         protected override void LookAround()
         {
-            throw new NotImplementedException();
+            Console.Write("You are standing in what looks like the kitchen. There’s an old wooden table to the right of \n" +
+                        "the room, with molding and rotten food decorating the table. There are 3 chairs surrounding \n" +
+                        "the table, however they don't seem to be able to hold up your weight, or anyone else's \n" +
+                        "weight for that matter.  To the left there’s a counter with a marble slab turned grey by the dirt \n" +
+                        "and mold covering it. Dirty dishes are filled to the brim of the counter, and among the piles of \n" +
+                        "dirt and dishes you see a dirty book with a page open. Next to the counter there is an old \n" +
+                        "gas stove, which does not appear to have been used for a long time. The plastic knobs \n" +
+                        "appear to be stuck in place by grease. ");
+            if (!Inventory.IsConsumed(2))
+            {
+                Console.Write("Something that catches your attention is the keyhole \n" +
+                "next to the stove, being surprisingly clean compared to the rest of the room.");
+            }
+            else if (Inventory.IsConsumed(2) && !AtticIsLocked)
+            {
+                Console.Write("A part of the ceiling has opened up, revealing a metallic \n" +
+                    "ladder leading to the attic");
+            }
+            else if (AtticIsLocked)
+            {
+                Console.Write("A part of the wall has been moved, revealing a modern codelock \n" +
+                    "with a display pad as well as a shiny metallic keypad. The display is shining with a green light \n" +
+                    "and says with black letters \"Enter password\"");
+            }
+            Console.WriteLine();
         }
     }
 }

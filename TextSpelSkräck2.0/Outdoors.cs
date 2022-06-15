@@ -25,7 +25,7 @@ namespace TextSpelSkräck2._0
                 userInput = userInput.ToLower();
                 string[] userInputArr = userInput.Split(' ');
                 Console.Clear();
-                
+
                 if (userInputArr[0] == "go")
                 {
                     int newRoom = GoToCommand(GoToAndPickUpFormatting(userInputArr));
@@ -33,13 +33,14 @@ namespace TextSpelSkräck2._0
                         return newRoom;
                 }
 
-                else if (userInputArr[0] == "use")
-                    UseCommand(InspectAndUseFormatting(userInputArr));
-
                 else if (userInputArr[0] == "inspect")
                     InspectCommand(InspectAndUseFormatting(userInputArr));
 
                 else if (userInputArr[0] == "pick")
+                    PickUpCommand(GoToAndPickUpFormatting(userInputArr));
+
+                else if (userInputArr[0] == "use")
+                    UseCommand(InspectAndUseFormatting(userInputArr));
 
                 else
                     InsideRoomBaseSwitch(userInput);
@@ -108,20 +109,29 @@ namespace TextSpelSkräck2._0
                     return -1;
 
                 default:
-                    Console.WriteLine("Invalid input, try typing 'go to entrance' to enter the estate");
+                    Console.WriteLine("invalid input, please type \"help\" to get a list of avalible options");
                     return id;
             }
         }
 
-        // currently there are no inspect commands for outside
         protected override void InspectCommand(string inspectedObject)
         {
-            throw new NotImplementedException();
+            switch (inspectedObject)
+            {
+                default:
+                    Console.WriteLine("invalid input, please type \"help\" to get a list of avalible options");
+                    break;
+            }
         }
 
         protected override void PickUpCommand(string item)
         {
-            throw new NotImplementedException();
+            switch(item)
+            {
+                default:
+                    Console.WriteLine("invalid input, please type \"help\" to get a list of avalible options");
+                    break;
+            }
         }
 
         protected override void UseCommand(string item)

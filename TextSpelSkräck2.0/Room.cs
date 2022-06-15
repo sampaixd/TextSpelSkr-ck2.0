@@ -17,8 +17,9 @@ namespace TextSpelSkräck2._0
         }
 
         public abstract int InsideRoom();
-        // summary:
-        //      contains the options of a switch that is present in all InsideRoom methods
+        /// <summary>
+        ///      contains the options of a switch that is present in all InsideRoom methods
+        /// </summary>
         protected virtual void InsideRoomBaseSwitch(string userInput)
         {
             switch(userInput)
