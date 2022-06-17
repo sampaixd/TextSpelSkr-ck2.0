@@ -50,10 +50,10 @@ namespace TextSpelSkräck2._0
 
         static void TestMethod()
         {
-            Kitchen kitchen = new Kitchen();
+            Mainhall test = new Mainhall();
             //DocumentManager.UnlockDocument(0);
             Inventory.ConsumeItem(2);
-            kitchen.InsideRoom();
+            test.InsideRoom();
 
         }
 

@@ -16,34 +16,9 @@ namespace TextSpelSkräck2._0
         {
             if (!Map.DiscoveredMainHall)
                 FirstEntry();
-            Console.WriteLine(name);
 
-            while (true)
-            {
-                string userInput = Console.ReadLine();
-                userInput = userInput.ToLower();
-                string[] userInputArr = userInput.Split(' ');
-                Console.Clear();
-
-                if (userInputArr[0] == "go")
-                {
-                    int newRoom = GoToCommand(GoToAndPickUpFormatting(userInputArr));
-                    if (newRoom != id)
-                        return newRoom;
-                }
-
-                else if (userInputArr[0] == "inspect")
-                    InspectCommand(InspectAndUseFormatting(userInputArr));
-
-                else if (userInputArr[0] == "pick")
-                    PickUpCommand(GoToAndPickUpFormatting(userInputArr));
-
-                else if (userInputArr[0] == "use")
-                    UseCommand(InspectAndUseFormatting(userInputArr));
-
-                else
-                    InsideRoomBaseSwitch(userInput);
-            }
+            return base.InsideRoom();
+            
         }
 
 
@@ -108,6 +83,8 @@ namespace TextSpelSkräck2._0
             Map.DiscoveredMainHall = true;
             Console.WriteLine("\nMain hall added to map");
             Console.WriteLine("\nPress any key to continue");
+            Console.ReadKey();
+            Console.Clear();
         }
 
         protected override int GoToCommand(string room)

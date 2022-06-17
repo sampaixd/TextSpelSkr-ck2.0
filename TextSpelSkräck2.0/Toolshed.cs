@@ -18,33 +18,7 @@ namespace TextSpelSkräck2._0
                 FirstEntry();
             if (Map.DiscoveredWalls)
                 unlockedHatch = true;
-            Console.WriteLine(name);
-            while (true)
-            {
-                string userInput = Console.ReadLine();
-                userInput = userInput.ToLower();
-                string[] userInputArr = userInput.Split(' ');
-                Console.Clear();
-
-                if (userInputArr[0] == "go")
-                {
-                    int newRoom = GoToCommand(GoToAndPickUpFormatting(userInputArr));
-                    if (newRoom != id)
-                        return newRoom;
-                }
-
-                else if (userInputArr[0] == "inspect")
-                    InspectCommand(InspectAndUseFormatting(userInputArr));
-
-                else if (userInputArr[0] == "pick")
-                    PickUpCommand(GoToAndPickUpFormatting(userInputArr));
-
-                else if (userInputArr[0] == "use")
-                    UseCommand(InspectAndUseFormatting(userInputArr));
-
-                else
-                    InsideRoomBaseSwitch(userInput);
-            }
+            return base.InsideRoom();
         }
 
         protected override void FirstEntry()

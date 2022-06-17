@@ -165,7 +165,7 @@ namespace TextSpelSkräck2._0
         static public bool DiscoveredMainHall { get { return discoveredMainhall; } set { discoveredMainhall = value; } }
         static public bool DiscoveredBedroom { get { return discoveredBedroom; } set { discoveredBedroom = value; } }
         static public bool DiscoveredKitchen { get { return discoveredKitchen; } set { discoveredKitchen = value; } }
-        static public bool DiscoveredToolshed { get { return discoveredToolshed; } set { DiscoveredToolshed = value; } }
+        static public bool DiscoveredToolshed { get { return discoveredToolshed; } set { discoveredToolshed = value; } }
         static public bool DiscoveredBasementStairs { get { return discoveredBasementStairs; } set { discoveredBasementStairs = value; } }
         static public bool DiscoveredCell { get { return discoveredCell; } set { discoveredCell = value; } }
         static public bool DiscoveredStorage { get { return discoveredStorage; } set { discoveredStorage = value; } }

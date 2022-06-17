@@ -61,6 +61,8 @@ namespace TextSpelSkräck2._0
                 currentlySelectedItem = NavigateInventory(currentlyUnlockedAmmount, currentlySelectedItem);
                 Console.Clear();
             }
+            foreach (Item item in items)
+                item.Id = -1;
         }
 
         static void DisplayUnlockedItem(Item currentItem, int currentlySelectedItem)

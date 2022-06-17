@@ -16,7 +16,36 @@ namespace TextSpelSkräck2._0
             this.id = id;
         }
 
-        public abstract int InsideRoom();
+        public virtual int InsideRoom()
+        {
+            Console.WriteLine(name);
+            while (true)
+            {
+                string userInput = Console.ReadLine();
+                userInput = userInput.ToLower();
+                string[] userInputArr = userInput.Split(' ');
+                Console.Clear();
+
+                if (userInputArr[0] == "go")
+                {
+                    int newRoom = GoToCommand(GoToAndPickUpFormatting(userInputArr));
+                    if (newRoom != id)
+                        return newRoom;
+                }
+
+                else if (userInputArr[0] == "inspect")
+                    InspectCommand(InspectAndUseFormatting(userInputArr));
+
+                else if (userInputArr[0] == "pick")
+                    PickUpCommand(GoToAndPickUpFormatting(userInputArr));
+
+                else if (userInputArr[0] == "use")
+                    UseCommand(InspectAndUseFormatting(userInputArr));
+
+                else
+                    InsideRoomBaseSwitch(userInput);
+}
+        }
         /// <summary>
         ///      contains the options of a switch that is present in all InsideRoom methods
         /// </summary>
@@ -55,6 +84,8 @@ namespace TextSpelSkräck2._0
 
         protected string GoToAndPickUpFormatting(string[] insertedCommand)
         {
+            if (insertedCommand.Length <= 1)    // if only "go" or "pick" was inserted
+                return "";
             string formattedString = "";
             for (int i = 2; i < insertedCommand.Length; i++)
             {
