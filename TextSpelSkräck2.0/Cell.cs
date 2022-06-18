@@ -151,6 +151,15 @@ namespace TextSpelSkräck2._0
                 posterIsRemoved = true;
                 Console.ReadKey();
                 Console.Clear();
+                if (EventTriggers.EllenIsAtStairs)
+                {
+                    Console.WriteLine("As you tear off the poster inside the cell, you suddenly hear a scream coming from the \n" +
+                        "basement stairs, followed by the sound of a door violently shutting. That scream sounded \n" +
+                        "just like Ellen.");
+                    Console.WriteLine("\nPress any key to continue");
+                    Console.ReadKey();
+                    Console.Clear();
+                }
             }
             else if (posterIsRemoved)
             {
@@ -202,7 +211,9 @@ namespace TextSpelSkräck2._0
                     Console.WriteLine("\n" + DocumentManager.Content(4));
                     Console.WriteLine("\n\nMysterious note added to documents");
                     Console.WriteLine("\nPress any key to continue");
+                    DocumentManager.UnlockDocument(4);
                     Console.ReadKey();
+                    Console.Clear();
                 }
                 if (codeLockPuzzleIsSolved)
                 {
@@ -220,7 +231,9 @@ namespace TextSpelSkräck2._0
                         "immediately! You lift her up in your arms, carrying her out of the cell. You need to get her to \n" +
                         "the car, now!");
                     Console.WriteLine("\n\nPress any key to continue");
+                    EventTriggers.IsCarryingEllen = true;
                     Console.ReadKey();
+                    Console.Clear();
                 }
             }
         }
@@ -233,7 +246,6 @@ namespace TextSpelSkräck2._0
             {
                 DisplayCodeLock(insertedNumbers, currentlySelectedNumber);
                 int[] temp = NavigateCodeLock(insertedNumbers[currentlySelectedNumber], currentlySelectedNumber);
-                
                 if (temp[1] == -1)
                     return;
 
@@ -257,6 +269,7 @@ namespace TextSpelSkräck2._0
 
             Console.WriteLine();
             Console.WriteLine("----------");
+            Console.WriteLine("\n\nPress w, a, s, d or arrow keys to navigate the codelock and esc to exit the puzzle");
         }
 
         void DisplayNumber(int insertedNumber, bool isSelected)
@@ -282,7 +295,7 @@ namespace TextSpelSkräck2._0
                 case ConsoleKey.W:
                 case ConsoleKey.UpArrow:
                     insertedNumber = (insertedNumber >= 9) ? 0 : ++insertedNumber;
-                        break;
+                    break;
 
                 case ConsoleKey.S:
                 case ConsoleKey.DownArrow:
@@ -303,7 +316,7 @@ namespace TextSpelSkräck2._0
                     selectedNumber = -1;
                     break;
             }
-
+            Console.Clear();
             return new int[] { insertedNumber, selectedNumber };
 
         }
@@ -311,7 +324,39 @@ namespace TextSpelSkräck2._0
 
         protected override void LookAround()
         {
-            throw new NotImplementedException();
+            Console.Write("Right in front of you there is a door with thick and rusted iron bars. ");
+
+            if (!codeLockPuzzleIsSolved)
+                Console.Write("Inside the room lies Ellen, \n" +
+                    "however in order to reach her you have to find the combination for the code lock. ");
+            
+            Console.Write("Behind you is the corridor \n" +
+                "leading back to the basement stairs, and looking to your left, there appears to be another \n" +
+                "corridor leading ");
+            if (!Map.DiscoveredStorage)
+                Console.Write("somewhere.");
+            
+            else
+                Console.Write("to the storage.");
+       
+
+            if (!DocumentManager.IsPickedUp(4))
+                Console.Write("On the ground below the code lock, there is a damp paper lying there.");
+   
+
+            if (codeLockPuzzleIsSolved)
+                Console.WriteLine("The walls, ceiling and floor inside the cell are made out of old concrete, \n" +
+                    "with cracks covering \n" +
+                    "the concrete. In the corner of the room, an old mattress is laying on the floor where you found Ellen.");
+
+
+            if (!posterIsRemoved && codeLockPuzzleIsSolved)
+                Console.WriteLine("The only decoration inside the cell is an old poster barely hanging onto the wall.");
+            
+            else if (posterIsRemoved)
+                Console.WriteLine("The poster is lying on the floor with a large scar almost cutting it in half, with a large hole \n" +
+                    "leading into the wall taking its former place.");
+            
         }
     }
 }

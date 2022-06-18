@@ -11,7 +11,7 @@ namespace TextSpelSkräck2._0
         static void Main(string[] args)
         {
             List<Room> rooms = GenerateRooms();
-            //TestMethod();
+            TestMethod(rooms);
             Prologue();
             int currentRoom = 0;
             while (currentRoom >= 0)
@@ -48,12 +48,13 @@ namespace TextSpelSkräck2._0
             Console.ReadKey();
         }
 
-        static void TestMethod()
+        static void TestMethod(List<Room> rooms)
         {
-            Mainhall test = new Mainhall();
+            Cell test = new Cell();
             //DocumentManager.UnlockDocument(0);
             Inventory.ConsumeItem(2);
             test.InsideRoom();
+            
 
         }
 
@@ -70,9 +71,12 @@ namespace TextSpelSkräck2._0
             rooms.Add(new Bedroom());
             rooms.Add(new Kitchen());
             rooms.Add(new Toolshed());
+            rooms.Add(new BasementStairs());
+            rooms.Add(new Cell());
 
             Console.WriteLine("Game loaded, press any key to start");
             Console.ReadKey();
+            Console.Clear();
             return rooms;
         }
         static void Prologue()
