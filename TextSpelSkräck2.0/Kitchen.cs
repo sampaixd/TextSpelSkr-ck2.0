@@ -281,8 +281,7 @@ namespace TextSpelSkräck2._0
         {
             while (true)
             {
-                Console.ForegroundColor = ConsoleColor.Black;
-                ConsoleKeyInfo consoleKey = Console.ReadKey();
+                ConsoleKeyInfo consoleKey = Console.ReadKey(true);
                 switch (consoleKey.Key)
                 {
 

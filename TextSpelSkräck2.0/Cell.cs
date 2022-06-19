@@ -157,6 +157,8 @@ namespace TextSpelSkräck2._0
                         "basement stairs, followed by the sound of a door violently shutting. That scream sounded \n" +
                         "just like Ellen.");
                     Console.WriteLine("\nPress any key to continue");
+                    EventTriggers.EllenIsAtStairs = false;
+                    EventTriggers.BasementDoorIsLocked = true;
                     Console.ReadKey();
                     Console.Clear();
                 }
@@ -286,9 +288,7 @@ namespace TextSpelSkräck2._0
 
         int[] NavigateCodeLock(int insertedNumber, int selectedNumber)
         {
-            Console.ForegroundColor = ConsoleColor.Black;
-            ConsoleKeyInfo keyPressed = Console.ReadKey();
-            Console.ForegroundColor = ConsoleColor.White;
+            ConsoleKeyInfo keyPressed = Console.ReadKey(true);
             
             switch(keyPressed.Key)
             {

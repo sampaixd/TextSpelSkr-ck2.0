@@ -18,6 +18,7 @@ namespace TextSpelSkräck2._0
         static bool discoveredWalls;            // 8
         static bool discoveredToolshedShortcut; // 9
         static bool discoveredAttic;            // 10
+        static bool discoveredLobby;            // 11
         static Map()
         {
             discoveredMainhall = false;
@@ -30,6 +31,8 @@ namespace TextSpelSkräck2._0
             discoveredWalls = false;
             discoveredToolshedShortcut = false;
             discoveredAttic = false;
+            discoveredLobby = false;
+
         }
 
 
@@ -172,6 +175,7 @@ namespace TextSpelSkräck2._0
         static public bool DiscoveredWalls { get { return discoveredWalls; } set { discoveredWalls = value; } }
         static public bool DiscoveredToolshedShortcut { get { return discoveredToolshedShortcut; } set { discoveredToolshedShortcut = value; } }
         static public bool DiscoveredAttic { get { return discoveredAttic; } set { discoveredAttic = value; } }
+        static public bool DiscoveredLobby { get { return discoveredLobby; } set { discoveredLobby = value; } }
 
     }
 }

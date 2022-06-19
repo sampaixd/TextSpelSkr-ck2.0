@@ -16,8 +16,8 @@ namespace TextSpelSkräck2._0
         {
             if (!Map.DiscoveredToolshed)
                 FirstEntry();
-            if (Map.DiscoveredWalls)
-                unlockedHatch = true;
+            if (Map.DiscoveredWalls && !unlockedHatch)
+                HatchFirstEntry();
             return base.InsideRoom();
         }
 
@@ -27,6 +27,23 @@ namespace TextSpelSkräck2._0
             Console.WriteLine("Toolshed added to map");
             Console.WriteLine("\nPress any key to continue");
             Map.DiscoveredToolshed = true;
+            Console.ReadKey();
+            Console.Clear();
+        }
+
+        void HatchFirstEntry()
+        {
+            Console.WriteLine("You go through the narrow gap inside the walls, feeling cobwebs tear and insects crawling \n" +
+                                "on your skin as you walk through the narrow gap in between. While having your face pushed \n" +
+                                "up against the wall, you cannot help but notice that you can see through the planks down in \n" +
+                                "the basement. Strange, you did not notice that when you were inside the basement. Once \n" +
+                                "you reach the end of the narrow wall, you come to a larger space, with seemingly the same \n" +
+                                "size as a room. At the top, you notice a hatch, similar to the once seen in the toolshed. It has \n" +
+                                "a hedge keeping it in place. You slowly remove the hedge from its place, pushing it up and \n" +
+                                "revealing exactly what you expected, the toolshed. You drag yourself up into the room, back \n" +
+                                "to the surface. Now, you have to find Ellen!");
+            Console.WriteLine("\nPress any key to continue");
+            unlockedHatch = true;
             Console.ReadKey();
             Console.Clear();
         }

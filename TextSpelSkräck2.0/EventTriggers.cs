@@ -8,8 +8,7 @@ namespace TextSpelSkräck2._0
 {
     internal static class EventTriggers
     {
-        // contains booleans that are not exclusive to one room, for example basement door gets locked while in storage/cell, 
-        // and is used for traversal within the basement stairs as well
+        // contains booleans that are not exclusive to one room, for example basement door gets locked while in storage/cell
         static bool basementDoorIsLocked;
         static bool isCarryingEllen;
         static bool ellenIsAtStairs;

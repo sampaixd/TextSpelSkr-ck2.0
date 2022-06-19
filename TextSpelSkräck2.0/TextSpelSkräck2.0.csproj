@@ -61,6 +61,7 @@
     <Compile Include="Room.cs" />
     <Compile Include="Storage.cs" />
     <Compile Include="Toolshed.cs" />
+    <Compile Include="Walls.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
