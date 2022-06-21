@@ -141,7 +141,8 @@ namespace TextSpelSkräck2._0
 
             documents.Add(new Document("Unknown document (Outdoors)", "It’s just a bunch of weird symbols, but they have to represent something, right?",
                 "..- ... . .-. -. .- -- . ---... / --. .- -- .--./\n" +
-                ".--. .- ... ... .----- .-. - ..---... / ..-. .--. .- .. .- -. . ... ..--. ....-"));
+                ".--. .- ... ... .----- .-. - ..---... / ..-. .--. .- .. .- -. . ... ..--. ....-\n" +
+                ".- .-.. .-.. / .-.. --- .-- . .-. -.-. .- ... ."));
 
             documents[0].IsPickedUp = true; // you start with this unlocked
         }

@@ -73,6 +73,8 @@ namespace TextSpelSkräck2._0
             rooms.Add(new Toolshed());
             rooms.Add(new BasementStairs());
             rooms.Add(new Cell());
+            rooms.Add(new Storage());
+            rooms.Add(new Walls());
 
             Console.WriteLine("Game loaded, press any key to start");
             Console.ReadKey();

@@ -114,7 +114,9 @@ namespace TextSpelSkräck2._0
 
         protected override void LookAround()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("The lighting is very sparse, making it hard to see inside the wall. The planks inside the wall \n" +
+                            "appear to have deteriorated even more than the walls in the basement, with huge chunks of \n" +
+                            "some of the planks missing, To your left is the body you found, lying lifeless in the corner.");
         }
 
  

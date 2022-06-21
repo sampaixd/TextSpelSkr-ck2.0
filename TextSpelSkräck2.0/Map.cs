@@ -16,9 +16,9 @@ namespace TextSpelSkräck2._0
         static bool discoveredCell;             // 6
         static bool discoveredStorage;          // 7
         static bool discoveredWalls;            // 8
-        static bool discoveredToolshedShortcut; // 9
-        static bool discoveredAttic;            // 10
-        static bool discoveredLobby;            // 11
+        static bool discoveredToolshedShortcut; // not a room
+        static bool discoveredAttic;            // 9
+        static bool discoveredLobby;            // 10
         static Map()
         {
             discoveredMainhall = false;
