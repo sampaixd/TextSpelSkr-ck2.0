@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attic.cs" />
+    <Compile Include="AtticEndPhase.cs" />
     <Compile Include="BasementStairs.cs" />
     <Compile Include="Bedroom.cs" />
     <Compile Include="Cell.cs" />

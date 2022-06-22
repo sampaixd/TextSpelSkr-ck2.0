@@ -8,8 +8,13 @@ namespace TextSpelSkräck2._0
 {
     internal class Attic : Room
     {
+        bool ComputerIsUnlocked;
+        int computerUnlockAttempts;
         public Attic() : base("Attic", 9)
-            { }
+        {
+            computerUnlockAttempts = 0;
+            ComputerIsLocked = true;
+        }
 
         public override int InsideRoom()
         {
@@ -43,7 +48,8 @@ namespace TextSpelSkräck2._0
                 case "end of the room":
                 case "metallic door":
                 case "escape":
-                    return EndPhase();
+                    AtticEndPhase endPhase = new AtticEndPhase();
+                    return endPhase.EndPhase();
 
                 default:
                     Console.WriteLine("invalid input, please type \"help\" to get a list of avalible options");
@@ -56,7 +62,11 @@ namespace TextSpelSkräck2._0
             switch(inspectedObject)
             {
                 case "gun":
+                case "weapon":
+                case "pistol":
                 case "document":
+                case "note":
+                case "paper":
                     PickupGun();
                     break;
 
@@ -79,7 +89,11 @@ namespace TextSpelSkräck2._0
             switch(item)
             {
                 case "gun":
+                case "weapon":
+                case "pistol":
                 case "document":
+                case "note":
+                case "paper":
                     PickupGun();
                     break;
 
@@ -136,112 +150,106 @@ namespace TextSpelSkräck2._0
             Console.Clear();
         }
 
+        void UseComputerRequirements()
+        {
+            if (computerUnlockAttempts >= 3)
+            {
+                Console.WriteLine("You walk to the computer and look at what is on the screen.There is a green text that says \n" +
+                                "“Terminal locked, please bring the computer to the responsible IT personnel”. It doesn’t \n" +
+                                "appear that you can unlock this computer anymore.");
+            }
+            else if (ComputerIsUnlocked)
+            {
+                UseComputer();
+            }
+            else
+            {
+                Console.WriteLine("You walk to the computer and look at what is on the screen. There is a green text that says \n" +
+                    "“username:”, waiting for an input. You lean over and put your hands on the keyboard.");
+                Console.WriteLine("\nPress any key to continue");
+                Console.ReadKey();
+                Console.Clear();
+                AttemptToUnlockComputer();
+
+            }
+            Console.ForegroundColor = ConsoleColor.White;
+
+
+        }
+
+        void AttemptToUnlockComputer()
+        {
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.Write("username: ");
+            string userName = Console.ReadLine();
+
+            string password = GetPassword();
+
+            if (userName == "gamp" && password == "inplanesight")
+            {
+                UnlockComputer();
+                return;
+            }
+            else
+            {
+                computerUnlockAttempts++;
+                Console.Clear();
+                Console.WriteLine("Incorrect username or password, press any key to try again");
+                Console.ReadKey(true);
+                Console.Clear();
+            }
+            if (computerUnlockAttempts == 3)
+            {
+                Console.WriteLine("Terminal locked, please bring the computer to the responsible IT personnel");
+                Console.ReadKey(true);
+                Console.Clear();
+                return;
+            }
+        }
+
+        string GetPassword()
+        {
+            Console.Write("password: ");
+            string password = "";
+            while (true)
+            {
+                ConsoleKeyInfo key = Console.ReadKey(true);
+                if (key.Key == ConsoleKey.Enter)
+                    return password;
+                
+                else if (key.KeyChar == '\b')
+                {
+                    if (password.Length > 0)
+                    {
+                        password = password.Remove(password.Length - 1);
+                        Console.Write("\b \b");
+                    }
+                }
+                else
+                {
+                    password += key.KeyChar;
+                    Console.Write("*");
+                }
+            }
+        }
+
+        void UnlockComputer()
+        {
+            Console.WriteLine("Login accepted");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey(true);
+            Console.Clear();
+            ComputerIsUnlocked = true;
+            UseComputer();
+        }
+
+
         void UseComputer()
         {
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine("Welcome user\n");
 
         }
-        int EndPhase()
-        {
-            Console.WriteLine("You walk up to the door, and try to push it open. It is heavy but you are slowly making \n" +
-            "progress. Suddenly the smell of coal fills the air, and you hear a voice behind you. “Hello” it \n" +
-            "is your wife, with her tank top and jeans still on. She is standing in a weird way, as if she did \n" +
-            "not know how to stand up normally, hunched over and with her arms dangling below her. Her \n" +
-            "head is tilted to the side, and a smile is forced onto her face, as if she was trying to give a \n" +
-            "sense of false security. Suddenly, she starts getting closer and closer. You will not be able to \n" +
-            "get the door open in time. What do you do?");
-
-            int attempts = 0;
-            while (attempts < 3)
-            {
-                attempts = EndPhaseGetAction();
-            }
-
-            return id;
-        }
-
-        int EndPhaseGetAction(int currentAttempt)
-        {
-            string userInput = Console.ReadLine();
-            userInput = userInput.ToLower();
-            string[] userInputArr = userInput.Split(' ');
-            Console.Clear();
-            switch(userInputArr[0])
-            {
-                case "go":
-                    EndPhaseGoToCommand(GoToAndPickUpFormatting(userInputArr));
-                    break;
-
-                case "inspect":
-                    EndPhaseInspectCommand(InspectAndUseFormatting(userInputArr));
-                    break;
-                
-                case "pick":
-                    EndPhasePickUpCommand(GoToAndPickUpFormatting(userInputArr));
-                    break;
-
-                    
-                case "use":     // this is the only option that can give you some kind of ending early
-                    return EndPhaseUseCommand(InspectAndUseFormatting(userInputArr));
-            }
-            Console.WriteLine("Ellen is slowly getting closer...");
-            return ++currentAttempt;
-        }
-
-        void EndPhaseGoToCommand(string input)
-        {
-            switch (input)
-            {
-                default:
-                    Console.WriteLine("invalid input, please type \"help\" to get a list of avalible options");
-                    break;
-            }
-        }
-
-        void EndPhaseInspectCommand(string input)
-        {
-            switch (input)
-            {
-                default:
-                    Console.WriteLine("invalid input, please type \"help\" to get a list of avalible options");
-                    break;
-            }
-        }
-
-        void EndPhasePickUpCommand(string input)
-        {
-            switch(input)
-            {
-                default:
-                    Console.WriteLine("invalid input, please type \"help\" to get a list of avalible options");
-                    break;
-            }
-        }
-
-        int EndPhaseUseCommand(string input)
-        {
-            switch(input)
-
-            {
-                case "gun":
-                case "weapon":
-                case "pistol":
-                    EndPhaseUseGun();
-                    return 5;
-
-                default:
-                    Console.WriteLine("invalid input, please type \"help\" to get a list of avalible options");
-                    Console.WriteLine("Ellen is slowly getting closer...");
-                    return id;
-
-            }
-                
-        }
-
-        void EndPhaseUseGun()
-        {
-
-        }
-
 
         protected override void LookAround()
         {
