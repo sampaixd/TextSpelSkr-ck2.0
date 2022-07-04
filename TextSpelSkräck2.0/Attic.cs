@@ -8,12 +8,12 @@ namespace TextSpelSkräck2._0
 {
     internal class Attic : Room
     {
-        bool ComputerIsUnlocked;
+        bool computerIsUnlocked;
         int computerUnlockAttempts;
         public Attic() : base("Attic", 9)
         {
             computerUnlockAttempts = 0;
-            ComputerIsLocked = true;
+            computerIsUnlocked = false;
         }
 
         public override int InsideRoom()
@@ -111,7 +111,7 @@ namespace TextSpelSkräck2._0
                 case "terminal":
                 case "computer terminal":
                 case "computerterminal":
-                    UseComputer();
+                    UseComputerRequirements();
                     break;
 
                 default:
@@ -158,7 +158,7 @@ namespace TextSpelSkräck2._0
                                 "“Terminal locked, please bring the computer to the responsible IT personnel”. It doesn’t \n" +
                                 "appear that you can unlock this computer anymore.");
             }
-            else if (ComputerIsUnlocked)
+            else if (computerIsUnlocked)
             {
                 UseComputer();
             }
@@ -180,31 +180,41 @@ namespace TextSpelSkräck2._0
         void AttemptToUnlockComputer()
         {
             Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.Write("username: ");
-            string userName = Console.ReadLine();
+            while (computerUnlockAttempts < 3)
+            {
+                Console.Write("username: ");
+                string userName = Console.ReadLine();
+                if (userName == string.Empty)
+                {
+                    Console.Clear();
+                    return;
+                }
 
-            string password = GetPassword();
+                string password = GetPassword();
+                if (password == string.Empty)
+                {
+                    Console.Clear();
+                    return;
+                }
 
-            if (userName == "gamp" && password == "inplanesight")
-            {
-                UnlockComputer();
-                return;
+                if (userName == "gamp" && password == "inplanesight")
+                {
+                    Console.Clear();
+                    UnlockComputer();
+                    return;
+                }
+                else
+                {
+                    computerUnlockAttempts++;
+                    Console.Clear();
+                    Console.WriteLine("Incorrect username or password, press any key to try again");
+                    Console.ReadKey(true);
+                    Console.Clear();
+                }
             }
-            else
-            {
-                computerUnlockAttempts++;
-                Console.Clear();
-                Console.WriteLine("Incorrect username or password, press any key to try again");
-                Console.ReadKey(true);
-                Console.Clear();
-            }
-            if (computerUnlockAttempts == 3)
-            {
-                Console.WriteLine("Terminal locked, please bring the computer to the responsible IT personnel");
-                Console.ReadKey(true);
-                Console.Clear();
-                return;
-            }
+            Console.WriteLine("Terminal locked, please bring the computer to the responsible IT personnel");
+            Console.ReadKey(true);
+            Console.Clear();
         }
 
         string GetPassword()
@@ -225,6 +235,9 @@ namespace TextSpelSkräck2._0
                         Console.Write("\b \b");
                     }
                 }
+                else if (key.Key == ConsoleKey.Escape)
+                    return "";
+                
                 else
                 {
                     password += key.KeyChar;
@@ -239,7 +252,7 @@ namespace TextSpelSkräck2._0
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey(true);
             Console.Clear();
-            ComputerIsUnlocked = true;
+            computerIsUnlocked = true;
             UseComputer();
         }
 
@@ -248,6 +261,7 @@ namespace TextSpelSkräck2._0
         {
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine("Welcome user\n");
+            Console.ReadLine();
 
         }
 

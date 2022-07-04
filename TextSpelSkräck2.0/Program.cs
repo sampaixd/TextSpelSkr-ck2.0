@@ -50,7 +50,7 @@ namespace TextSpelSkräck2._0
 
         static void TestMethod(List<Room> rooms)
         {
-            Cell test = new Cell();
+            Attic test = new Attic();
             //DocumentManager.UnlockDocument(0);
             Inventory.ConsumeItem(2);
             test.InsideRoom();
